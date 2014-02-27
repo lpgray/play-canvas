@@ -1,0 +1,353 @@
+
+	html, body{
+		background: #000;
+		color: #fff;
+		font: normal normal 16px;
+		position: relative;
+		-webkit-transform-origin : center 0;
+		-moz-transform-origin : center 0;
+		-ms-transform-origin : center 0;
+		-o-transform-origin : center 0;
+		transform-origin : center 0;
+		padding: 0; margin: 0;
+		overflow-x: hidden;
+	}
+	a,a:hover{
+		color: #FFF287;
+	}
+	a:active{
+		color: yellow;
+	}
+
+
+	.main-wrap{
+		width: 480px;
+	 	height: 800px;
+	 	background: #eee url(imgs/bg.png) center center repeat-x;
+	 	margin: 0 auto;
+		position: relative;
+	}
+	.info-wrap .container{
+		width: 470px;
+	}
+	.progress{
+		width: 420px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-left: -210px;
+		margin-top: -200px;
+		z-index: 2;
+	}
+
+	.header{
+		width: 100%;
+		height: 0;
+		/*background: url(imgs/sngame_01.png) 0 0 no-repeat;*/
+		font: 0;
+		text-indent: -9999px;
+		/*box-shadow: 0 3px 7px rgba(0,0,0,.5);*/
+	}
+	
+	
+
+
+	/*.record-grid{
+		width: 440px;
+		border: 1px solid #7E9950;
+		border-radius: 10px;
+		margin: 5px auto;
+		padding: 2px 0;
+		box-shadow: 0 0 4px rgba(0,0,0,.2);
+		height: 54px;
+		font-size: 12px;
+	}
+	.record-grid .container{
+		width: 420px;
+	}
+	.record-grid h2{
+		font-size: 12px;
+		text-align: center;
+		padding: 0; margin: 0;
+	}
+	.record-grid .col-xs-4{
+		padding: 0;
+	}
+	.record-grid .bder-btom{
+		border-bottom: 1px dashed #fff;
+	}
+	.record-grid .bder-side{
+		border-left: 1px dashed #fff;
+		border-right: 1px dashed #fff;
+	}*/
+
+
+	.info-wrap{
+		
+	}
+	.btn-help,
+	.btn-help:active{
+		width: 70px; height: 70px;
+		background: url(imgs/btn2_03.png) 0 0 no-repeat;
+		font-size: 0;
+		box-shadow: none;
+	}
+	.btn-history,
+	.btn-history:active{
+		width: 70px; height: 70px;
+		background: url(imgs/btn2_05.png) 0 0 no-repeat;
+		font-size: 0;
+		box-shadow: none;
+	}
+	.info-panel{
+		background: linear-gradient(90deg, rgba(0,0,0,0),rgba(0,0,0,.4) 50%,rgba(0,0,0,0));
+		height: 30px;
+		line-height: 30px;
+		margin: 6px 0 0 -35px;
+		width: 280px;
+	}
+	.info-panel p{
+		padding: 0 0 3px 0;
+		margin: 0;
+		font-size: 12px;
+	}
+
+	
+	
+	.desktop{
+		padding-top: 10px;
+	}
+	.desktop .container{
+		width: 422px;
+		margin: 0 auto;
+		height: 100%;
+		border: 1px solid #E8FEA8;
+		border-radius: 10px;
+		font-family: 'youyuan';
+		font-weight: 700;
+		text-shadow: 0 0 2px rgba(0,0,0,.3);
+	}
+	.row-0 .col-xs-4{
+		width: 140px;
+	}
+	.row-1 .col-xs-2,
+	.row-2 .col-xs-2{
+		width: 70px;
+	}
+	.row-1 .col-xs-8{
+		padding: 0;
+		width: 280px;
+	}
+	.row-1 .col-xs-8 > .row{
+		padding: 0;
+		margin: 0;
+	}
+	.row{
+		text-align: center;
+	}
+	.bet-grid{
+		height: 75px;
+		padding-top: 8px;
+	}
+	.row-1 .bet-grid{
+		height: 74px;
+		padding-top: 8px;
+	}
+	.bet-grid{
+		border: 2px solid #E8FEA8;
+		position: relative;
+	}
+	.bet-grid > div{
+		color: #fff;
+		font-size: 24px;
+	}
+	.bet-grid > div > span{
+		display: block;
+		font-size: .6em;
+		font-weight: 700;
+		color: #FFC600;
+	}
+	.canvas-ctn{
+		border: 2px solid #E8FEA8;
+		padding: 0;
+		height: 222px;
+		position: relative;
+		overflow: hidden;
+	}
+	canvas{
+		width: 280px;
+		height: 206px;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+	.big-ctn{
+		padding: 0;
+		height: 148px;
+	}
+	.big-ctn .bet-grid{
+		height: 100%;
+	}
+	.big-ctn .bet-grid div{
+		font-size: 56px;
+	}
+	.big-ctn .bet-grid .chouma-0{
+		top: 6px;
+		left: 6px;
+	}
+	.br-tl{
+		border-top-left-radius: 9px;
+	}
+	.br-tr{
+		border-top-right-radius: 9px;
+	}
+	.br-bl{
+		border-bottom-left-radius: 9px;
+	}
+	.br-br{
+		border-bottom-right-radius: 9px;
+	}
+
+
+	
+	#j_clear{
+		background: url(imgs/sngame_08.png) 0 0 no-repeat;
+		width: 62px; height: 28px;
+		border: none;
+		font: 0;
+		text-indent: -9999px;
+	}
+	.bottom-wrap{
+		width: 100%;
+		bottom: 0;
+		position: absolute;
+		text-align: center;
+	}
+	.bottom-wrap h5{
+		margin: 4px 0;
+	}
+	#j_btnMain{
+		background: url(imgs/sngame_17.png) 0 0 no-repeat;
+		width: 209px; height: 61px;
+		border: none;
+		padding: 0;
+		text-indent: -9999px;
+	}
+	
+
+
+	.j_chouma{
+		height: 75px;
+		margin-top: 6px;
+	}
+	.j_chouma .btn{
+		background: none;
+		border: 0;
+		width: 68px; height: 75px;
+		margin: 0; padding: 0;
+		background: url(imgs/sngame_12.png) 0 0 no-repeat;
+		text-indent: -9999px;
+		font-size: 0;
+	}
+	.j_chouma .active{
+		background: url(imgs/sngame_14.png) 0 0 no-repeat;
+	}
+	.chouma{
+		background-repeat: no-repeat;
+		width: 62px;
+		height: 66px;
+		display: block;
+		margin: 4px auto 0;
+		text-indent: -9999px;
+	}
+	.chouma-10{
+		background-image: url(imgs/bet_03.png);
+	}
+	.chouma-50{
+		background-image: url(imgs/bet_05.png);
+	}
+	.chouma-100{
+		background-image: url(imgs/bet_07.png);
+	}
+	.chouma-500{
+		background-image: url(imgs/bet_09.png);
+	}
+	.chouma-1000{
+		background-image: url(imgs/bet_11.png);
+	}
+	.chouma-0{
+		width: auto;
+		text-indent: 0;
+		font-style: normal;
+		width: 42px;
+		height: 42px;
+		line-height: 42px;
+		padding: 0;
+		box-sizing: content-box;
+		color: #fff;
+		text-shadow: -2px 0 2px #b90100, 0 2px 2px #b90100, 2px 0 2px #b90100, 0 -2px 2px #b90100;
+		font-size: 12px;
+		position: absolute;
+		z-index: 1;
+		background: url(imgs/bet_sm.png) 0 0 no-repeat;
+		font-weight: bold;
+		top: 0; left: 0;
+	}
+
+	.modal-confirm .btn{
+		width: 60px;
+		padding: 3px;
+		text-shadow: 0 1px 0 rgba(0,0,0,.2);
+	}
+	.modal-confirm .btn-default,
+	.modal-confirm .btn-default:hover{
+		color: #fff;
+		background-color: #5E3939;
+		border-color: #440303;
+	}
+	.modal-confirm .btn-primary,
+	.modal-confirm .btn-primary:hover{
+		background-color: #DA8F0A;
+		border-color: #7C3106;
+	}
+	.modal{
+		color: #ffc600;
+		text-shadow: 0 1px 1px #5c8900;
+	}
+	.modal .table>thead>tr>th, .modal .table>tbody>tr>td{
+		border-color: #723a31;
+	}
+	.modal-content{
+		background: transparent;
+		box-shadow: none;
+		border: none;
+		width: 320px;
+		margin: 100px auto 0;
+	}
+	.modal-header{
+		border: none;
+		text-align: center;
+		width: 213px;
+		height: 39px;
+		padding: 0; margin: 0 auto;
+		background: url(imgs/tt_03.png) center center no-repeat;
+	}
+	.modal-title{
+		height: 39px;
+		line-height: 39px;
+		font-size: 20px;
+		line-height: 39px;
+		color: #fffbb8;
+		font-weight: 700;
+		text-shadow: 0 0 2px #583501;
+	}
+	.modal-body{
+		background: #4e1603;
+		border: 4px solid #e8cb3e;
+		box-shadow: 0 2px 1px #775513,inset 0 2px 0px #4f520d;
+		border-radius: 6px;
+	}
+	.modal-footer{
+		border: none;
+		display: none;
+	}
