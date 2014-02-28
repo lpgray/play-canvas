@@ -205,6 +205,7 @@ $(function() {
         confirmModal.find('.j_enter').click(function(){
             confirmModal.modal('hide');
             confirmCallback.call(confirmCallback);
+            return false;
         });
 
         var loading = {

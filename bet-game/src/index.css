@@ -294,19 +294,19 @@
 		top: 0; left: 0;
 	}
 
-	.modal-confirm .btn{
+	.modal .btn{
 		width: 60px;
 		padding: 3px;
 		text-shadow: 0 1px 0 rgba(0,0,0,.2);
 	}
-	.modal-confirm .btn-default,
-	.modal-confirm .btn-default:hover{
+	.modal .btn-default,
+	.modal .btn-default:hover{
 		color: #fff;
 		background-color: #5E3939;
 		border-color: #440303;
 	}
-	.modal-confirm .btn-primary,
-	.modal-confirm .btn-primary:hover{
+	.modal .btn-primary,
+	.modal .btn-primary:hover{
 		background-color: #DA8F0A;
 		border-color: #7C3106;
 	}
@@ -339,7 +339,7 @@
 		line-height: 39px;
 		color: #fffbb8;
 		font-weight: 700;
-		text-shadow: 0 0 2px #583501;
+		text-shadow: 0 2px 2px #583501, 2px 0 2px #583501, 0 -2px 2px #583501, -2px 0 2px #583501;
 	}
 	.modal-body{
 		background: #4e1603;
