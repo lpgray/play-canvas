@@ -38,9 +38,6 @@ module.exports = function(grunt) {
         dest: 'temp/index-<%=pkg.version%>.min.css'
       }
     },
-    copy: {
-      
-    },
     jshint: {
       options: {
         jshintrc : true
@@ -50,6 +47,13 @@ module.exports = function(grunt) {
       },
       src: {
         src : ['src/**/*.js']
+      }
+    },
+    processhtml: {
+      dist: {
+        files: {
+          'build/index.html' : 'src/index.html'
+        }
       }
     },
     watch: {
@@ -76,10 +80,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-processhtml');
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'nodeunit', 'concat', 'uglify']);
   grunt.registerTask('debug', ['connect', 'watch']);
 
-  grunt.registerTask('build', ['uglify', 'cssmin', 'concat']);
+  grunt.registerTask('build', ['uglify', 'cssmin', 'concat', 'processhtml']);
 };

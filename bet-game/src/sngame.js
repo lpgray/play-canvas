@@ -179,9 +179,10 @@ $(function() {
         peilv: {},
         peilvRel: {},
         records: [],
-        resourceNumber : 8, // 8张图片一个音频
+        resourceNumber : 10, // 8张图片，2个音频
         loadedNumber : 0,
-        animationLevel : 'high' // | 'high' 
+        animationLevel : 'high', // | 'high'
+        isLoadAudios : true
     }
 
     /**
@@ -539,6 +540,7 @@ $(function() {
             }
 
             view.gogogo();
+            sound.gogogo();
 
             store.saveBet(function(resp) {
                 if (resp.isPass === 'N') {
@@ -552,9 +554,11 @@ $(function() {
                 setTimeout(function() {
                     view.clear();
                     view.stop(resp);
+                    sound.stop();
                     setTimeout(function(){
                         if (resp.isSuccess === 'Y') {
                             view.alert('恭喜中奖 [ 开奖号码:' + resp.firstNum + ',' + resp.secondNum + ',' +resp.threeNum + ' ]');
+                            sound.win();                        
                         } else {
                             view.alert('很遗憾，没有中奖 [ 开奖号码:' + resp.firstNum + ',' + resp.secondNum + ',' +resp.threeNum + ' ]');
                         }
@@ -613,37 +617,57 @@ $(function() {
      * 音效
      */
     var sound = (function() {
-        var audio = document.getElementById('J_audio_1');
+        var audioBet = document.getElementById('J_audioBet');
+        var audioWin = document.getElementById('J_audioWin');
+
         return {
             init : function(){
-                audio.addEventListener("canplaythrough", function () {
+                if(!model.isLoadAudios){
+                    return;
+                }
+                var self = this;
+                audioBet.addEventListener("canplaythrough", function () {
                     model.loadedNumber++;
                 }, false);
-                audio.src = $(audio).data('src');
+                audioWin.addEventListener("canplaythrough", function () {
+                    model.loadedNumber++;
+                }, false);
+                audioBet.src = $(audioBet).data('src');
+                audioWin.src = $(audioWin).data('src');
             },
             pickUp: function() {
-                clearTimeout(this.timeout);
-                audio.currentTime = 0;
-                audio.play();
-                this.timeout = setTimeout(function() {
-                    audio.pause();
-                }, 800);
+                // clearTimeout(this.timeout);
+                // audio.currentTime = 0;
+                // audio.play();
+                // this.timeout = setTimeout(function() {
+                //     audio.pause();
+                // }, 800);
             },
             bet: function() {
-                clearTimeout(this.timeout);
-                audio.currentTime = 2;
-                audio.play();
-                this.timeout = setTimeout(function() {
-                    audio.pause();
-                }, 800);
+                // clearTimeout(this.timeout);
+                // audio.currentTime = 2;
+                // audio.play();
+                // this.timeout = setTimeout(function() {
+                //     audio.pause();
+                // }, 800);
             },
-            doBet: function() {
-                clearTimeout(this.timeout);
-                audio.currentTime = 4;
-                audio.play();
-                this.timeout = setTimeout(function() {
-                    audio.pause();
-                }, 2000);
+            gogogo: function() {
+                audioBet.play();
+                this.audioInterval = setInterval(function(){
+                    audioBet.pause();
+                    audioBet.currentTime = 0;
+                    audioBet.play();
+                }, 1300);
+            },
+            stop : function(){
+                clearInterval(this.audioInterval);
+                audioBet.pause();
+                audioBet.currentTime = 0;
+            },
+            win: function(){
+                audioWin.pause();
+                audioWin.currentTime = 0;
+                audioWin.play();
             }
         }
     }());
@@ -722,7 +746,7 @@ $(function() {
                     }
                 }, 200);
                 view.init();
-                // sound.init();
+                sound.init();
                 eventBind();
             }
         }
