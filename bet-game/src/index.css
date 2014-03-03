@@ -295,8 +295,10 @@
 	}
 
 	.modal .btn{
-		width: 60px;
-		padding: 3px;
+		width: 80px;
+		padding: 5px;
+		margin-left: 10px;
+		font-size: 18px;
 		text-shadow: 0 1px 0 rgba(0,0,0,.2);
 	}
 	.modal .btn-default,

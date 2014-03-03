@@ -742,12 +742,12 @@ $(function() {
                     if (m.resourceNumber === m.loadedNumber) {
                         clearInterval(interval);
                         view.draw();
+                        eventBind();
                         view.loading.hide();
                     }
                 }, 200);
                 view.init();
                 sound.init();
-                eventBind();
             }
         }
     }(view, sound));
