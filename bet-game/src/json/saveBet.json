@@ -4,6 +4,7 @@
 	"firstNum":"6",
 	"secondNum":"2",
 	"threeNum":"3",
-	"credit":"1800",
-	"msg":"错误异常"
+	"credit":"10000",
+	"msg":"错误异常",
+	"addCredit": "1000"
 }

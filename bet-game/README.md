@@ -1,11 +1,15 @@
 Game Change Log
 ==========
+## v0.5
+- added md5.js
+- display the addCredit parameter.
+
 ## v0.4
--增大modal中的按钮尺寸及字号
+- 增大modal中的按钮尺寸及字号
 
 ## v0.3
--增大信息窗内文字大小
--增大头部文字大小
+- 增大信息窗内文字大小
+- 增大头部文字大小
 
 ## v0.2
 - added audios(bet, win)

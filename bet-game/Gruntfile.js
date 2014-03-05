@@ -9,7 +9,7 @@ module.exports = function(grunt) {
     // Task configuration.
     concat: {
       js: {
-        src: ['src/lib/jquery-2.1.0.min.js', 'src/bs3/js/bootstrap.min.js','temp/sngame-<%= pkg.version %>.min.js'],
+        src: ['temp/md5.min.js', 'src/lib/jquery-2.1.0.min.js', 'src/bs3/js/bootstrap.min.js','temp/sngame-<%= pkg.version %>.min.js'],
         dest: 'build/all.js'
       },
       placeholderjs: {
@@ -28,7 +28,8 @@ module.exports = function(grunt) {
     uglify: {
       sngame: {
         files:{
-          'temp/sngame-<%=pkg.version%>.min.js' : 'src/sngame.js'
+          'temp/sngame-<%=pkg.version%>.min.js' : 'src/sngame.js',
+          'temp/md5.min.js' : 'src/lib/md5.js'
         }
       }
     },

@@ -99,7 +99,8 @@ $(function() {
 
         var config = {
             debug: true,
-            key: 'abc123'
+            key: 'abc123',
+            keyPro: 'productionkey'
         };
 
         /**
@@ -155,9 +156,11 @@ $(function() {
                 if (config.debug) {
                     var key = config.key;
                 } else {
-                    var key = 0; // 线下分配的编号
+                    var key = config.proKey; // 线下分配编号
                 }
-                data.sign = 'custNum=' + data.custNum + '&time=' + data.time + '&key=' + key;
+                // data.sign = 'custNum=' + data.custNum + '&time=' + data.time + '&key=' + key;
+                var sign = 'custNum=' + data.custNum + '&time=' + data.time + '&key=' + key;
+                data.sign = md5(sign);
                 for (var i in model.data) {
                     data[i] = model.data[i];
                 }
@@ -379,7 +382,7 @@ $(function() {
                     // scaleMainFrame();
                 },
                 run: function() {
-                    console.info('running...', this.pause);
+                    // console.info('running...', this.pause);
                     if (pause) {
                         return;
                     }
@@ -556,12 +559,21 @@ $(function() {
                     view.stop(resp);
                     sound.stop();
                     setTimeout(function(){
-                        if (resp.isSuccess === 'Y') {
-                            view.alert('恭喜中奖 [ 开奖号码:' + resp.firstNum + ',' + resp.secondNum + ',' +resp.threeNum + ' ]');
-                            sound.win();                        
-                        } else {
-                            view.alert('很遗憾，没有中奖 [ 开奖号码:' + resp.firstNum + ',' + resp.secondNum + ',' +resp.threeNum + ' ]');
+                        // var addCredit = parseInt(resp.addCredit);
+                        var theNumber = '[ 开奖号码:' + resp.firstNum + ',' + resp.secondNum + ',' +resp.threeNum + ' ]';
+                        if(resp.addCredit && resp.addCredit > 0){
+                            view.alert(theNumber + ' - [ 恭喜您获得了 ' + Math.abs(resp.addCredit) + ' 积分 ]');
+                            sound.win();
+                        }else{
+                            view.alert(theNumber + ' - [ 本次没中奖，继续努力哦! ]');
                         }
+
+                        // if (resp.isSuccess === 'Y') {
+                        //     view.alert('[ 开奖号码:' + resp.firstNum + ',' + resp.secondNum + ',' +resp.threeNum + ' ] -- [积分输赢: '+ resp.addCredit +']');
+                        //     sound.win();                        
+                        // } else {
+                        //     view.alert('[ 开奖号码:' + resp.firstNum + ',' + resp.secondNum + ',' +resp.threeNum + ' ] -- [积分输赢: '+ resp.addCredit +']');
+                        // }
                     }, 200);
                 }, 4000);
             });
