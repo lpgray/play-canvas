@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Class Test</title>
+</head>
+<body>
+	<script src="../src/base.js"></script>
+	<script>
+	var Bird = Class.create({
+		fly : function(){
+			console.info('我是一只鸟，我会飞');
+		}
+	});
+
+	var SingBird = Class.extend(Bird, {
+		sing : function(){
+			this.fly();
+			console.info('我还能唱歌');
+		}
+	});
+
+	(new SingBird).sing();
+	</script>
+</body>
+</html>

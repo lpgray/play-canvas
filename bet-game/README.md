@@ -1,5 +1,8 @@
 Game Change Log
 ==========
+## v0.6
+- added keyPro
+
 ## v0.5
 - added md5.js
 - display the addCredit parameter.

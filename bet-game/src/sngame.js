@@ -1,4 +1,10 @@
 $(function() {
+    var config = {
+        debug: false,
+        key: 'abc123',
+        keyPro: '04795471325da17a590fed6225e6506c',
+        animationLevel: 'high' // 'low'
+    };
     /**
      * 打印日期
      * @param  {[type]} x [description]
@@ -97,11 +103,11 @@ $(function() {
      */
     var store = (function() {
 
-        var config = {
-            debug: true,
-            key: 'abc123',
-            keyPro: 'productionkey'
-        };
+        // var config = {
+        //     debug: true,
+        //     key: 'abc123',
+        //     keyPro: 'productionkey'
+        // };
 
         /**
          * 缓存 localStorage，主要用来缓存历史开奖结果
@@ -156,7 +162,7 @@ $(function() {
                 if (config.debug) {
                     var key = config.key;
                 } else {
-                    var key = config.proKey; // 线下分配编号
+                    var key = config.keyPro; // 线下分配编号
                 }
                 // data.sign = 'custNum=' + data.custNum + '&time=' + data.time + '&key=' + key;
                 var sign = 'custNum=' + data.custNum + '&time=' + data.time + '&key=' + key;
@@ -184,7 +190,6 @@ $(function() {
         records: [],
         resourceNumber : 10, // 8张图片，2个音频
         loadedNumber : 0,
-        animationLevel : 'high', // | 'high'
         isLoadAudios : true
     }
 
@@ -299,7 +304,7 @@ $(function() {
                     var px = this.loc.px;
                     var py = this.loc.py;
 
-                    if(model.animationLevel === 'high'){
+                    if(config.animationLevel === 'high'){
                         this.circleRun(); // 圆周运动
                         this.calcLocation(); //运动一次
                         if(number%2 === 0){
