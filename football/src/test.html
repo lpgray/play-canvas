@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Canvas API Test</title>
+</head>
+<body>
+	<canvas id="myCanvas" width="400" height="300"></canvas>
+	<script>
+	var img=document.createElement('img');
+		img.src='http://www.w3schools.com/jsref/img_the_scream.jpg';
+		img.onload = function () {
+		var c=document.getElementById('myCanvas');
+		var ctx=c.getContext('2d');
+		ctx.drawImage(img,90,130,50,60,10,10,50,60);
+	}
+	</script>
+</body>
+</html>

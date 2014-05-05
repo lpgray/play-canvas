@@ -1,4 +1,5 @@
 window.onload = function(){
+	// alert(navigator.userAgent);
 	// Canvas Context
 	var canvas = document.getElementById('J_canvas');
 	var scale = 1; // other image to scale by the number
@@ -225,7 +226,7 @@ window.onload = function(){
 		getBall : function(){
 			var self = this;
 
-			var clipTop = 167 *2;
+			var clipTop = 167*2;
 			var clipLeft = 121;
 
 			var left = clipLeft * this.getBallIdx;
@@ -235,7 +236,7 @@ window.onload = function(){
 			if(new Date - this.lastActiveTime >= 150){
 				this.lastActiveTime = new Date;
 				this.getBallIdx++;
-				if(this.getBallIdx >= 4 || this.getBallIdx === 2){
+				if(this.getBallIdx >= 2){
 					this.getBallIdx = 3;
 				}
 			}
@@ -495,7 +496,7 @@ window.onload = function(){
 			this.ready = true;
 		},
 		reset : function(){
-			var ballSize = 54;
+			var ballSize = 52;
 			var left = parseInt(400 * scale) - (ballSize/2);
 			var top = parseInt(360 * scale);
 			
@@ -509,7 +510,6 @@ window.onload = function(){
 			this.ready = false;
 			this.getTarget = false;
 			this.isHidden = false;
-
 			this.context.drawImage(this.img, ballSize, 0, ballSize, ballSize, left, top, parseInt(ballSize * scale), parseInt(ballSize * scale));
 		},
 		fall : function(){
@@ -519,7 +519,7 @@ window.onload = function(){
 		disapear : function(){
 			var ballSize = this.ballSize;
 			this.isHidden = true;
-			this.context.drawImage(this.img, ballSize, ballSize, ballSize, ballSize, this.currentLeft, this.currentTop, parseInt(ballSize * scale) * this.scale, parseInt(ballSize * scale) * this.scale);
+			this.context.drawImage(this.img, -ballSize * 2, -ballSize * 2);
 		},
 		draw : function(){
 			if(this.isHidden){
@@ -534,7 +534,7 @@ window.onload = function(){
 				this.currentLeft = this.left + this.move;
 				this.currentTop = this.top - this.calcPath(this.move);
 				this.fall();
-				this.trigger('getTarget');
+				// this.trigger('getTarget');
 				return;
 			}
 
@@ -564,16 +564,16 @@ window.onload = function(){
 		course.img = resourse['course'];
 		course.draw(context);
 
+		// Init Player
+		var player = new Shooter();
+		player.setContext(context);
+		player.reset();
+
 		// Init Ball
 		var ball = new Ball();
 		ball.img = resourse['ball'];
 		ball.setContext(context);
 		ball.reset();
-
-		// Init Player
-		var player = new Shooter();
-		player.setContext(context);
-		player.reset();
 
 
 		// Init Goalkeeper
@@ -591,6 +591,7 @@ window.onload = function(){
 		Paper.run();
 
 		function shoot(duration, focus, success){
+			reset();
 			player.run();
 			setTimeout(function(){
 				ball.fly(duration, focus);
@@ -605,10 +606,14 @@ window.onload = function(){
 					}else if(duration.indexOf('L') > -1){
 						keeper.changeStatus('moveLeft');
 					}
-					ball.when('getTarget', function(){
+					// ball.when('getTarget', function(){
+					// 	// ball.disapear();
+					// 	keeper.changeStatus('getBall');
+					// });
+					setTimeout(function(){
 						ball.disapear();
 						keeper.changeStatus('getBall');
-					});
+					}, 200);
 				}
 			}, 150*6);
 		}
@@ -667,32 +672,32 @@ window.onload = function(){
 			shoot('BR', 1, isSuccess);
 		};
 		
-		// document.getElementById('J_stop').onclick = function(){
-		// 	keeper.stop();
-		// };
-		// document.getElementById('J_block').onclick = function(){
-		// 	keeper.changeStatus('block');
-		// };
-		// document.getElementById('J_moveLeft').onclick = function(){
-		// 	keeper.changeStatus('moveLeft');
-		// };
-		// document.getElementById('J_moveRight').onclick = function(){
-		// 	keeper.changeStatus('moveRight');
-		// };
-		// document.getElementById('J_getBall').onclick = function(){
-		// 	keeper.changeStatus('getBall');
-		// };
-		// document.getElementById('J_reset').onclick = function(){
-		// 	keeper.reset();
-		// };
+		document.getElementById('J_stop').onclick = function(){
+			keeper.stop();
+		};
+		document.getElementById('J_block').onclick = function(){
+			keeper.changeStatus('block');
+		};
+		document.getElementById('J_moveLeft').onclick = function(){
+			keeper.changeStatus('moveLeft');
+		};
+		document.getElementById('J_moveRight').onclick = function(){
+			keeper.changeStatus('moveRight');
+		};
+		document.getElementById('J_getBall').onclick = function(){
+			keeper.changeStatus('getBall');
+		};
+		document.getElementById('J_reset').onclick = function(){
+			keeper.reset();
+		};
 
-		// document.getElementById('J_playerReset').onclick = function(){
-		// 	player.reset();
-		// };
-		// document.getElementById('J_shoot').onclick = function(){
-		// 	player.reset();
-		// 	player.run('TOPLEFT');
-		// };
+		document.getElementById('J_playerReset').onclick = function(){
+			player.reset();
+		};
+		document.getElementById('J_shoot').onclick = function(){
+			player.reset();
+			player.run();
+		};
 		document.getElementById('J_b').onclick = function(){
 			player.reset('B');
 		};

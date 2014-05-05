@@ -11,8 +11,12 @@
 	<link rel="stylesheet" href="css/base.css">
 	<link rel="stylesheet" href="css/style.css">
 	<style>
-	button{
+	button, input[type=text]{
 		width: 60px;
+		font-size: 12px;
+	}
+	body{
+		height: 100%;
 	}
 	</style>
 </head>
@@ -20,8 +24,8 @@
 	<h1>Football Game</h1>
 	<canvas id="J_canvas"></canvas>
 	
-	<div style="position: fixed; left: 0; top: 0; background: rgba(0,0,0,.6); color: #fff">
-		<!-- <h2>守门员测试</h2>
+	<div style="position: fixed; right: 0; top: 0; background: rgba(0,0,0,.6); color: #fff; height: 100%; overflow-y: auto;">
+		<h2>守门员测试</h2>
 		<button id="J_reset">复位</button>
 		<button id="J_block">防守</button>
 		<button id="J_stop">停止</button>
@@ -32,7 +36,7 @@
 		<h2>射手测试</h2>
 		<button id="J_playerReset">复位</button>
 		<button id="J_shoot">射门</button>
-		<br> -->
+		<br>
 		<h2>射手选择</h2>
 		<button id="J_b">巴西</button>
 		<button id="J_a">阿根廷</button>
