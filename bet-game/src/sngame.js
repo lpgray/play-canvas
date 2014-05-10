@@ -3,7 +3,7 @@ $(function() {
         debug: false,
         key: 'abc123',
         keyPro: '04795471325da17a590fed6225e6506c',
-        animationLevel: 'high' // 'low'
+        animationLevel: 'high'
     };
     /**
      * 打印日期
@@ -188,9 +188,9 @@ $(function() {
         peilv: {},
         peilvRel: {},
         records: [],
-        resourceNumber : 10, // 8张图片，2个音频
+        resourceNumber : 8, // 8张图片，2个音频
         loadedNumber : 0,
-        isLoadAudios : true
+        isLoadAudios : false
     }
 
     /**
@@ -548,7 +548,7 @@ $(function() {
             }
 
             view.gogogo();
-            sound.gogogo();
+            // sound.gogogo();
 
             store.saveBet(function(resp) {
                 if (resp.isPass === 'N') {
@@ -562,13 +562,13 @@ $(function() {
                 setTimeout(function() {
                     view.clear();
                     view.stop(resp);
-                    sound.stop();
+                    // sound.stop();
                     setTimeout(function(){
                         // var addCredit = parseInt(resp.addCredit);
                         var theNumber = '[ 开奖号码:' + resp.firstNum + ',' + resp.secondNum + ',' +resp.threeNum + ' ]';
                         if(resp.addCredit && resp.addCredit > 0){
                             view.alert(theNumber + ' - [ 恭喜您获得了 ' + Math.abs(resp.addCredit) + ' 积分 ]');
-                            sound.win();
+                            // sound.win();
                         }else{
                             view.alert(theNumber + ' - [ 本次没中奖，继续努力哦! ]');
                         }
@@ -634,14 +634,15 @@ $(function() {
      * 音效
      */
     var sound = (function() {
-        var audioBet = document.getElementById('J_audioBet');
-        var audioWin = document.getElementById('J_audioWin');
+        var audioBet, audioWin;
 
         return {
             init : function(){
                 if(!model.isLoadAudios){
                     return;
                 }
+                audioBet = document.getElementById('J_audioBet');
+                audioWin = document.getElementById('J_audioWin');
                 var self = this;
                 audioBet.addEventListener("canplaythrough", function () {
                     model.loadedNumber++;

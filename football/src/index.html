@@ -22,9 +22,25 @@
 </head>
 <body>
 	<h1>Football Game</h1>
+	<div id="J_buttons" class="button-wrap">
+		<div id="J_btnTL" class="sel-button"><div class="arraw"></div></div>
+		<div id="J_btnTT" class="sel-button"><div class="arraw"></div></div>
+		<div id="J_btnTR" class="sel-button"><div class="arraw"></div></div>
+		<div class="clearfix"></div>
+		<div id="J_btnML" class="sel-button"><div class="arraw"></div></div>
+		<div id="J_btnMM" class="sel-button"><div class="circle"></div></div>
+		<div id="J_btnMR" class="sel-button"><div class="arraw"></div></div>
+		<div class="clearfix"></div>
+		<div id="J_btnBL" class="sel-button"><div class="arraw"></div></div>
+		<div id="J_btnBB" class="sel-button"><div class="arraw"></div></div>
+		<div id="J_btnBR" class="sel-button"><div class="arraw"></div></div>
+	</div>
+	<div id="J_progress" class="progress-bar">
+		<div class="progress"></div>
+	</div>
 	<canvas id="J_canvas"></canvas>
 	
-	<div style="position: fixed; right: 0; top: 0; background: rgba(0,0,0,.6); color: #fff; height: 100%; overflow-y: auto;">
+	<div style="position: fixed; left: 0; top: 0; background: rgba(0,0,0,.6); color: #fff; height: 100%; overflow-y: auto; opacity: .3; z-index: 3; display: none">
 		<h2>守门员测试</h2>
 		<button id="J_reset">复位</button>
 		<button id="J_block">防守</button>
@@ -57,8 +73,16 @@
 		<button id="J_bottom">下</button>
 		<button id="J_bottomRight">右下</button>
 	</div>
+
 	<script src="js/Paper.js"></script>
 	<script src="js/Class.js"></script>
+	<script src="js/Ball.js"></script>
+	<script src="js/Course.js"></script>
+	<script src="js/Keeper.js"></script>
+	<script src="js/ScoreBoard.js"></script>
+	<script src="js/Shooter.js"></script>
+	<script src="js/SelectButtons.js"></script>
+	<script src="js/ProgressBar.js"></script>
 	<script src="config.js"></script>
 	<script src="app.js"></script>
 </body>

@@ -1,3 +1,21 @@
-body, html{overflow: hidden;}
+body, html{overflow: hidden; background-color: #000}
 
-canvas{background: #444; position: absolute; top: 0; left: 0;}
+canvas{background: #444; position: absolute; top: 0; left: 0; z-index: 1;}
+
+.button-wrap{position: absolute; top: 0; left: 0; z-index: 2; display: none;}
+.button-wrap > .sel-button{width: 123px; height: 47px; background-image: url(../img/select-1.png); background-position: 0 0; background-repeat: no-repeat; float: left; margin: 2px 1px; background-size: 100%;}
+.button-wrap > .sel-button > div{display: block; margin: 10px auto; width: 36px; height: 27px; background-size: 100%; background-repeat: no-repeat; background-position: center center;}
+.button-wrap > .sel-button > div.arraw{background-image: url(../img/arraw.png);}
+.button-wrap > .sel-button > div.circle{background-image: url(../img/circle.png);}
+#J_btnTL > div{-webkit-transform: rotate(30deg);}
+#J_btnTT > div{-webkit-transform: rotate(90deg);}
+#J_btnTR > div{-webkit-transform: rotate(160deg);}
+#J_btnML > div{}
+#J_btnMM > div{}
+#J_btnMR > div{-webkit-transform: rotate(180deg);}
+#J_btnBL > div{-webkit-transform: rotate(-30deg);}
+#J_btnBB > div{-webkit-transform: rotate(-90deg);}
+#J_btnBR > div{-webkit-transform: rotate(-160deg);}
+
+.progress-bar{display: none; background-size: 100%; background-image: url(../img/power-2.png); background-position: 0 0; background-repeat: no-repeat; width: 273px; height: 40px; position: absolute; top: 50px; left: 50px; z-index: 4;}
+.progress-bar > .progress{width: 30%; background-size: auto 100%; height: 100%; background-image: url(../img/power-1.png); background-position: 0 0; background-repeat: no-repeat; }
