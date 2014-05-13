@@ -78,7 +78,7 @@ var SelectButtons = Class.create({
 	get : function(id){
 		return document.getElementById(id);
 	},
-	onSelected : function(callback){
+	onTouchUp : function(callback){
 		this.selectedCallback = callback;
 	},
 	onTouchStart : function(callback){

@@ -6,10 +6,7 @@ var RES = {
 		course : 'img/area.png',
 		keeper : 'img/0004.png',
 		ball : 'img/ball.png',
-		select: 'img/select-1.png',
-		power1: 'img/power-1.png',
-		power2: 'img/power-2.png',
 		scoreBoard: 'img/score-board.png'
 	},
-	imgNumber : 10
+	imgNumber : 7
 }

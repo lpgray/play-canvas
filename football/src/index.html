@@ -21,7 +21,7 @@
 	</style>
 </head>
 <body>
-	<h1>Football Game</h1>
+	
 	<div id="J_buttons" class="button-wrap">
 		<div id="J_btnTL" class="sel-button"><div class="arraw"></div></div>
 		<div id="J_btnTT" class="sel-button"><div class="arraw"></div></div>
@@ -35,10 +35,87 @@
 		<div id="J_btnBB" class="sel-button"><div class="arraw"></div></div>
 		<div id="J_btnBR" class="sel-button"><div class="arraw"></div></div>
 	</div>
+
 	<div id="J_progress" class="progress-bar">
 		<div class="progress"></div>
 	</div>
+	
 	<canvas id="J_canvas"></canvas>
+	
+	<div id="J_mainPanel" class="main-panel-wrap hide fixed-box">
+		<div class="main-panel j_will_scale">
+			<div class="panel-inner">
+				<h1>疯狂射门</h1>
+				<div class="btns-wrap">
+					<a href="#" class="btn btn-primary">开始游戏</a><a href="#" class="btn btn-primary">球员选择</a><a href="#" class="btn btn-primary">游戏规则</a><a href="#" class="btn btn-primary">积分兑换</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="J_drawer" class="drawer-wrap drawer-close">
+		<div class="drawer">
+			<div class="drawer-inner">
+				<h1>疯狂足球</h1>
+				<div class="ctrl-left">
+					<a href="###" class="btn">开始游戏</a><a href="###" class="btn">球员选择</a>
+				</div>
+				<div class="ctrl-right">
+					<a href="###" class="btn">游戏规则</a><a href="###" class="btn">积分兑换</a>
+				</div>
+				<div class="toggle">
+					<i></i>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="J_modal" class="modal-wrap hide fixed-box">
+		<div class="j_will_scale" style="width: 640px; position: absolute; top: 0; left: 50%; margin-left: -320px;">
+		<div class="modal">
+			<a href="#" class="close">&times;</a>
+			<div class="modal-content">
+				<h1>游戏说明</h1>
+				<div class="body-content">
+					<div class="j-words hide">游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明</div>
+					<div class="select-wrap hide j-team-sel clearfix">
+						<div class="item active">
+							<img src="img/flag_bz.png" alt="">
+							<h2>巴西</h2>
+						</div><div class="item">
+							<img src="img/flag_ag.png" alt="">
+							<h2>阿根廷</h2>
+						</div><div class="item">
+							<img src="img/flag_sp.png" alt="">
+							<h2>西班牙</h2>
+						</div>
+					</div>
+					<div class="select-wrap hide j-score-sel clearfix">
+						<div class="item active">
+							
+							<h2>积分1</h2>
+						</div><div class="item">
+							
+							<h2>积分2</h2>
+						</div><div class="item">
+							
+							<h2>积分3</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div></div>
+	</div>
+
+	<div id="J_loading" class="fixed-box">
+		<div class="loading-wrap j_will_scale">
+			<div class="alert-wrap loading-content">
+				<div class="alert-inner">
+					<p>正在加载游戏...</p>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<div style="position: fixed; left: 0; top: 0; background: rgba(0,0,0,.6); color: #fff; height: 100%; overflow-y: auto; opacity: .3; z-index: 3; display: none">
 		<h2>守门员测试</h2>
@@ -73,7 +150,9 @@
 		<button id="J_bottom">下</button>
 		<button id="J_bottomRight">右下</button>
 	</div>
-
+	
+	<script src="js/zepto.min.js"></script>
+	<script src="js/zepto.touch.js"></script>
 	<script src="js/Paper.js"></script>
 	<script src="js/Class.js"></script>
 	<script src="js/Ball.js"></script>
@@ -83,7 +162,10 @@
 	<script src="js/Shooter.js"></script>
 	<script src="js/SelectButtons.js"></script>
 	<script src="js/ProgressBar.js"></script>
+	<script src="js/Modal.js"></script>
+	<script src="js/Loading.js"></script>
 	<script src="config.js"></script>
+	<script src="store.js"></script>
 	<script src="app.js"></script>
 </body>
 </html>

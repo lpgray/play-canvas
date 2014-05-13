@@ -1,4 +1,7 @@
+
+
 window.onload = function(){
+	
 	// alert(navigator.userAgent);
 	// Canvas Context
 	var canvas = document.getElementById('J_canvas');
@@ -38,9 +41,19 @@ window.onload = function(){
 	canvas.width = cW;
 	canvas.height = cH;
 
-	// 暴露 canvas
+	// 暴露 canvas和缩放值
 	window.canvas = canvas;
 	window.scale = scale;
+
+	// 缩放
+	$('.j_will_scale,.j_will_scale_full').css({
+		'-webkit-transform' : 'scale('+ scale +')',
+		'-moz-transform' : 'scale('+ scale +')',
+		'-ms-transform' : 'scale('+ scale +')',
+		'-o-transform' : 'scale('+ scale +')'
+	});
+	
+	Loading.show('正在加载游戏...');
 
 	var loadedNumber = 0;
 	var imagesNumber = RES.imgNumber;
@@ -87,7 +100,6 @@ window.onload = function(){
 		ball.setContext(context);
 		ball.reset();
 
-
 		// Init Goalkeeper
 		var keeper = new Goalkeeper();
 		keeper.img = resourse['keeper'];
@@ -102,13 +114,6 @@ window.onload = function(){
 		// Init Buttons
 		var buttons = new SelectButtons();
 		buttons.init();
-		buttons.onSelected(function(duration){
-			var power = pb.stop();
-			shoot(duration, 0, true);
-		});
-		buttons.onTouchStart(function(){
-			pb.prepare();
-		});
 
 		// Init ProgressBar
 		var pb = new ProgressBar();
@@ -123,7 +128,8 @@ window.onload = function(){
 		Paper.addItem('scoreBoard', scoreBoard);
 		Paper.run();
 
-		function shoot(duration, focus, success){
+		var timer, timer1;
+		function shoot(duration, focus, success, callback){
 			reset();
 			player.run();
 			buttons.hide();
@@ -141,9 +147,14 @@ window.onload = function(){
 						keeper.changeStatus('moveLeft');
 					}
 					
-					setTimeout(function(){
+					clearTimeout(timer);
+					clearTimeout(timer1);
+					timer = setTimeout(function(){
 						ball.disapear();
 						keeper.changeStatus('getBall');
+						timer1 = setTimeout(function(){
+							callback && callback.call();
+						}, 200);
 					}, 250);
 				}
 			}, 150*6);
@@ -155,93 +166,249 @@ window.onload = function(){
 			keeper.reset();
 			buttons.show();
 			keeper.changeStatus('block');
+			Loading.hide();
+			pb.hide();
 		}
 
-		reset();
+		var MainMenu = (function(){
+			var $dom = $('#J_mainPanel');
+
+			var cbs;
+
+			var $btns = $dom.find('.btn-primary');
+			$($btns[0]).bind('tap', function(){
+				cbs['onStart'] && cbs['onStart'].call();
+				return false;
+			});
+			$($btns[1]).bind('tap', function(){
+				cbs['onTeamView'] && cbs['onTeamView'].call();
+				return false;
+			});
+			$($btns[2]).bind('tap', function(){
+				cbs['onRuleView'] && cbs['onRuleView'].call();
+				return false;
+			});
+			$($btns[3]).bind('tap', function(){
+				cbs['onScoreView'] && cbs['onScoreView'].call();
+				return false;
+			});
+
+			return {
+				show : function(){
+					$dom.css('display', 'block');
+				},
+				config : function(option){
+					cbs = option;
+				},
+				hide : function(){
+					$dom.css('display', 'none');
+				}
+			}
+		}());
+
+		var Drawer = (function(){
+			var $dom = $('#J_drawer');
+
+			var cbs;
+
+			var closed = true;
+
+			$dom.find('.toggle').on('tap', function(){
+				if(closed){
+					Drawer.show();
+					closed = false;
+				}else{
+					Drawer.hide();
+					closed = true;
+				}
+			});
+
+			var $btns = $dom.find('.btn');
+			$($btns[0]).bind('tap', function(){
+				cbs['onStart'] && cbs['onStart'].call();
+				return false;
+			});
+			$($btns[1]).bind('tap', function(){
+				cbs['onTeamView'] && cbs['onTeamView'].call();
+				return false;
+			});
+			$($btns[2]).bind('tap', function(){
+				cbs['onRuleView'] && cbs['onRuleView'].call();
+				return false;
+			});
+			$($btns[3]).bind('tap', function(){
+				cbs['onScoreView'] && cbs['onScoreView'].call();
+				return false;
+			});
+
+			return {
+				show : function(){
+					$dom.removeClass('drawer-close');
+				},
+				config : function(option){
+					cbs = option;
+				},
+				hide : function(){
+					$dom.addClass('drawer-close');
+				}
+			}
+		}());
+
+		Loading.hide();
+
+		buttons.onTouchStart(function(){
+			pb.prepare();
+		});
+		// 点击按钮蓄力抬起事件
+		buttons.onTouchUp(function(duration){
+			var power = pb.stop();
+			// 提交服务器获得射门结果
+			store.getGameResult({}, function(){
+				shoot(duration, 1, false, function(){
+					// 弹出反馈窗
+					Loading.show('对不起，球儿没进');
+					Drawer.show();
+				});
+			});
+		});
+		
+		// 获取游戏积分、登录等...
+		store.queryUserInfo(function(){
+
+		});
+
+		
+		MainMenu.show();
+		//点击按钮事件回调
+		var buttonsCb = {
+			onStart : function(){
+				MainMenu.hide();
+				Drawer.hide();
+				reset();
+			},
+			onScoreView : function(){
+				Modal.show({
+					title : '积分兑换',
+					sel : 'score'
+				});
+			},
+			onRuleView : function(){
+				Modal.show({
+					title : '游戏规则'
+				});
+			},
+			onTeamView : function(){
+				Modal.show({
+					title : '球队选择',
+					sel : 'team'
+				});
+			}
+		};
+		MainMenu.config(buttonsCb);
+		Drawer.config(buttonsCb);
+
+		Modal.config({
+			onTeamSelected : function(idx){
+				if(idx == 0){
+					player.reset('B');
+				}else if(idx == 1){
+					player.reset('A');
+				}else{
+					player.reset('P');
+				}
+			},
+			onScoreSelected : function(idx){
+				// 分数选择
+			}
+		});
+		
+
+
+		// reset();
 
 		// TEST CODE
-		document.getElementById('J_topLeft').onclick = function(){
-			var isSuccess = document.getElementById('J_focusIpt').value;
-			isSuccess = isSuccess || 0;
-			shoot('TL', 1, isSuccess);
-		};
-		document.getElementById('J_top').onclick = function(){
-			var isSuccess = document.getElementById('J_focusIpt').value;
-			isSuccess = isSuccess || 0;
-			shoot('TT', 1, isSuccess);
-		};
-		document.getElementById('J_topRight').onclick = function(){
-			var isSuccess = document.getElementById('J_focusIpt').value;
-			isSuccess = isSuccess || 0;
-			shoot('TR', 1, isSuccess);
-		};
-		document.getElementById('J_left').onclick = function(){
-			var isSuccess = document.getElementById('J_focusIpt').value;
-			isSuccess = isSuccess || 0;
-			shoot('ML', 1, isSuccess);
-		};
-		document.getElementById('J_middle').onclick = function(){
-			var isSuccess = document.getElementById('J_focusIpt').value;
-			isSuccess = isSuccess || 0;
-			shoot('MM', 1, isSuccess);
-		};
-		document.getElementById('J_right').onclick = function(){
-			var isSuccess = document.getElementById('J_focusIpt').value;
-			isSuccess = isSuccess || 0;
-			shoot('MR', 1, isSuccess);
-		};
-		document.getElementById('J_bottomLeft').onclick = function(){
-			var isSuccess = document.getElementById('J_focusIpt').value;
-			isSuccess = isSuccess || 0;
-			shoot('BL', 1, isSuccess);
-		};
-		document.getElementById('J_bottom').onclick = function(){
-			var isSuccess = document.getElementById('J_focusIpt').value;
-			isSuccess = isSuccess || 0;
-			shoot('BB', 1, isSuccess);
-		};
-		document.getElementById('J_bottomRight').onclick = function(){
-			var isSuccess = document.getElementById('J_focusIpt').value;
-			isSuccess = isSuccess || 0;
-			shoot('BR', 1, isSuccess);
-		};
+		// document.getElementById('J_topLeft').onclick = function(){
+		// 	var isSuccess = document.getElementById('J_focusIpt').value;
+		// 	isSuccess = isSuccess || 0;
+		// 	shoot('TL', 1, isSuccess);
+		// };
+		// document.getElementById('J_top').onclick = function(){
+		// 	var isSuccess = document.getElementById('J_focusIpt').value;
+		// 	isSuccess = isSuccess || 0;
+		// 	shoot('TT', 1, isSuccess);
+		// };
+		// document.getElementById('J_topRight').onclick = function(){
+		// 	var isSuccess = document.getElementById('J_focusIpt').value;
+		// 	isSuccess = isSuccess || 0;
+		// 	shoot('TR', 1, isSuccess);
+		// };
+		// document.getElementById('J_left').onclick = function(){
+		// 	var isSuccess = document.getElementById('J_focusIpt').value;
+		// 	isSuccess = isSuccess || 0;
+		// 	shoot('ML', 1, isSuccess);
+		// };
+		// document.getElementById('J_middle').onclick = function(){
+		// 	var isSuccess = document.getElementById('J_focusIpt').value;
+		// 	isSuccess = isSuccess || 0;
+		// 	shoot('MM', 1, isSuccess);
+		// };
+		// document.getElementById('J_right').onclick = function(){
+		// 	var isSuccess = document.getElementById('J_focusIpt').value;
+		// 	isSuccess = isSuccess || 0;
+		// 	shoot('MR', 1, isSuccess);
+		// };
+		// document.getElementById('J_bottomLeft').onclick = function(){
+		// 	var isSuccess = document.getElementById('J_focusIpt').value;
+		// 	isSuccess = isSuccess || 0;
+		// 	shoot('BL', 1, isSuccess);
+		// };
+		// document.getElementById('J_bottom').onclick = function(){
+		// 	var isSuccess = document.getElementById('J_focusIpt').value;
+		// 	isSuccess = isSuccess || 0;
+		// 	shoot('BB', 1, isSuccess);
+		// };
+		// document.getElementById('J_bottomRight').onclick = function(){
+		// 	var isSuccess = document.getElementById('J_focusIpt').value;
+		// 	isSuccess = isSuccess || 0;
+		// 	shoot('BR', 1, isSuccess);
+		// };
 		
-		document.getElementById('J_stop').onclick = function(){
-			keeper.stop();
-		};
-		document.getElementById('J_block').onclick = function(){
-			keeper.changeStatus('block');
-		};
-		document.getElementById('J_moveLeft').onclick = function(){
-			keeper.changeStatus('moveLeft');
-		};
-		document.getElementById('J_moveRight').onclick = function(){
-			keeper.changeStatus('moveRight');
-		};
-		document.getElementById('J_getBall').onclick = function(){
-			keeper.changeStatus('getBall');
-		};
-		document.getElementById('J_reset').onclick = function(){
-			keeper.reset();
-		};
+		// document.getElementById('J_stop').onclick = function(){
+		// 	keeper.stop();
+		// };
+		// document.getElementById('J_block').onclick = function(){
+		// 	keeper.changeStatus('block');
+		// };
+		// document.getElementById('J_moveLeft').onclick = function(){
+		// 	keeper.changeStatus('moveLeft');
+		// };
+		// document.getElementById('J_moveRight').onclick = function(){
+		// 	keeper.changeStatus('moveRight');
+		// };
+		// document.getElementById('J_getBall').onclick = function(){
+		// 	keeper.changeStatus('getBall');
+		// };
+		// document.getElementById('J_reset').onclick = function(){
+		// 	keeper.reset();
+		// };
 
-		document.getElementById('J_playerReset').onclick = function(){
-			player.reset();
-		};
-		document.getElementById('J_shoot').onclick = function(){
-			player.reset();
-			player.run();
-		};
-		document.getElementById('J_b').onclick = function(){
-			player.reset('B');
-		};
-		document.getElementById('J_a').onclick = function(){
-			player.reset('A');
-		};
-		document.getElementById('J_p').onclick = function(){
-			player.reset('P');
-		};
+		// document.getElementById('J_playerReset').onclick = function(){
+		// 	player.reset();
+		// };
+		// document.getElementById('J_shoot').onclick = function(){
+		// 	player.reset();
+		// 	player.run();
+		// };
+		// document.getElementById('J_b').onclick = function(){
+		// 	player.reset('B');
+		// };
+		// document.getElementById('J_a').onclick = function(){
+		// 	player.reset('A');
+		// };
+		// document.getElementById('J_p').onclick = function(){
+		// 	player.reset('P');
+		// };
 
-		document.getElementById('J_allReset').onclick = reset;
+		// document.getElementById('J_allReset').onclick = reset;
 	};
 };

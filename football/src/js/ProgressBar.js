@@ -33,6 +33,7 @@ var ProgressBar = Class.create({
 		return this.i;
 	},
 	hide : function(){
-		progressBar.style.display = 'none';
+		this.progressBar.style.display = 'none';
+		this.bar.style.width = '30%';
 	}
 });
