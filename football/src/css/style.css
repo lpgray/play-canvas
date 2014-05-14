@@ -1,6 +1,6 @@
 body, html{overflow: hidden; background-color: #000}
 
-canvas{background: #444; position: absolute; top: 0; left: 0; z-index: 1;}
+canvas{background: #000; position: absolute; top: 0; left: 0; z-index: 1;}
 
 .button-wrap{position: absolute; top: 0; left: 0; z-index: 2; display: none;}
 .button-wrap > .sel-button{width: 123px; height: 47px; background-image: url(../img/select-1.png); background-position: 0 0; background-repeat: no-repeat; float: left; margin: 2px 1px; background-size: 100%;}

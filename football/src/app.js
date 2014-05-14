@@ -1,5 +1,4 @@
 
-
 window.onload = function(){
 	
 	// alert(navigator.userAgent);
@@ -12,7 +11,8 @@ window.onload = function(){
 	var wH = window.innerHeight;
 	var wW = window.innerWidth;
 	if(wW < wH){
-		alert('请使用宽频模式游戏'); // 或者用图片做个假象，让用户主动转屏
+		alert('请使用宽频模式进行游戏，请旋转屏幕');
+		location.reload();
 		return;
 	}
 
