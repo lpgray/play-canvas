@@ -321,13 +321,22 @@ window.onload = function(){
 				reset();
 			},
 			onScoreView : function(){
-				store.queryCoupons(function(data){
-
-				});
-
 				Modal.show({
 					title : '积分兑换',
 					sel : 'score'
+				});
+
+				store.queryCoupons(function(data){
+					var tmpl = '';
+					for(var i = 0, l = data.couponList.length; i < l ;i++){
+						var temp = data.couponList[i];
+						tmpl += '<div class="item" data-activeid="'+temp.activeId+'">';
+						tmpl += ' <h1>'+ temp.preValue +'券</h1>';
+						tmpl += ' <h2>'+ temp.credit +'分</h2>';
+						tmpl += '</div>';
+					}
+
+					Modal.setScorePanel(tmpl);
 				});
 			},
 			onRuleView : function(){
@@ -355,24 +364,52 @@ window.onload = function(){
 					player.reset('P');
 				}
 			},
-			onScoreSelected : function(idx){
-				// 分数选择
+			onScoreSelected : function(aid){
+				if(confirm('确认兑换？')){
+					store.exchangeCoupon({activeId : aid, count : 1}, function(data){
+						if(data.isPass != 'Y'){
+							Loading.show('请求接收失败');
+							return;
+						}
+
+						if(data.isMaxTimes == 1){
+							Loading.show('达到此券今日兑奖上限');
+							return;
+						}
+						if(data.isMaxTimes == 2){
+							Loading.show('达到此券总次数上限');
+							return;
+						}
+
+						if(data.result != 'Y'){
+							Loading.show('兑换失败');
+						}else{
+							Loading.show('兑换成功');
+							Modal.hide();
+						}
+					});
+				}
 			}
 		});
 
-		// 获取游戏积分、登录等...
-		store.getUserCredit(function(data){
-			if(!data.custNum){
-				Loading.show('你还没登录');
-				return;
-			}
+		function fetchScore(){
+			// 获取游戏积分、登录等...
+			store.getUserCredit(function(data){
+				if(!data.custNum){
+					Loading.show('你还没登录');
+					return;
+				}
 
-			if(data.credit){
-				scoreBoard.setScore(data.credit);
-			}
+				if(data.credit){
+					scoreBoard.setScore(data.credit);
+				}
 
-			Loading.hide();
-		});
+				Loading.hide();
+			});
+		}
+		fetchScore();
+
+		
 		
 
 

@@ -9,9 +9,9 @@ var Modal = (function(){
 
   var funcTeamSel, funcScoreSel;
 
-  $dom.find('.j-score-sel .item').on('tap', function(){
+  $dom.find('.j-score-sel').on('tap', '.item', function(){
     $(this).addClass('active').siblings().removeClass('active');
-    funcScoreSel && funcScoreSel.call(this, $(this).index());
+    funcScoreSel && funcScoreSel.call(this, $(this).data('activeid'));
     return false;
   });
   $dom.find('.j-team-sel .item').on('tap', function(){
@@ -53,6 +53,12 @@ var Modal = (function(){
 
       $dom.find('h1').html(option.title);
       $dom.css('display', 'block');
+    },
+    setScorePanel : function(tmpl){
+      $dom.find('.j-score-sel').html(tmpl);
+    },
+    hide : function(){
+      $dom.css('display', 'none');
     }
   };
 }());

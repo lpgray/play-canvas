@@ -81,8 +81,18 @@ var store = (function(){
 		},
 		// 游戏积分兑换券
 		exchangeCoupon : function(params, callback){
+			var signObj = {
+				key : RES.key,
+				sourceCode : RES.sourceCode,
+				activeId : params.activeId,
+				count : params.count
+			}
+
+			params.sign = getSign(signObj);
+
 			ajax({
-				url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/exchangeCoupon.htm',
+				// url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/exchangeCoupon.htm',
+				url : 'moke/exchange.json',
 				data : params,
 				success : function(data){
 					callback(data);
