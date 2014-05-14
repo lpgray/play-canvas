@@ -8,5 +8,7 @@ var RES = {
 		ball : 'img/ball.png',
 		scoreBoard: 'img/score-board.png'
 	},
-	imgNumber : 7
+	imgNumber : 7,
+	key : 'abc123',
+	sourceCode : 'h5'
 }

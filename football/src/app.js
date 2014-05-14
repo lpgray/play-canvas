@@ -135,18 +135,20 @@ window.onload = function(){
 			buttons.hide();
 			setTimeout(function(){
 				ball.fly(duration, focus);
-				if(success == 1){
+				if(success){
 					if(duration === 'TT' || duration === 'MM' || duration === 'BB'){
 						keeper.changeStatus('moveLeft');
 					}
-					ball.off('getTarget');
+					clearTimeout(timer1);
+					timer1 = setTimeout(function() {
+						callback && callback.call();
+					}, 450);
 				}else{
 					if(duration.indexOf('R') > -1){
 						keeper.changeStatus('moveRight');
 					}else if(duration.indexOf('L') > -1){
 						keeper.changeStatus('moveLeft');
 					}
-					
 					clearTimeout(timer);
 					clearTimeout(timer1);
 					timer = setTimeout(function(){
@@ -254,29 +256,61 @@ window.onload = function(){
 			}
 		}());
 
-		Loading.hide();
+		// Loading.hide();
 
 		buttons.onTouchStart(function(){
 			pb.prepare();
 		});
+		
 		// 点击按钮蓄力抬起事件
 		buttons.onTouchUp(function(duration){
 			var power = pb.stop();
+				
+			var params = {
+				type : 1
+			}
+
+			if(duration.indexOf('L') > -1){
+				params.point = 'A';
+			}else if(duration.indexOf('R') > -1){
+				params.point = 'C';
+			}else{
+				params.point = 'B';
+			}
+
 			// 提交服务器获得射门结果
-			store.getGameResult({}, function(){
-				shoot(duration, 1, false, function(){
-					// 弹出反馈窗
-					Loading.show('对不起，球儿没进');
-					Drawer.show();
-				});
+			store.submitResult(params, function(data){
+				
+				if(data.isPass == 'N'){
+					Loading.show('请求失败');
+					return;
+				}
+
+				if(data.isCanUsed == 'N'){
+					Loading.show('未开启');
+					return;
+				}
+
+				if(data.isMaxTimes == 'Y'){
+					Loading.show('今日游戏次数已达上限');
+					return;
+				}
+
+				if(data.isWin == 'Y'){
+					shoot(duration, 1, true, function(){
+						Loading.show('恭喜，球儿进了');
+						Drawer.show();
+						scoreBoard.setScore(data.credit);
+					});
+				}else{
+					shoot(duration, 0, false, function(){
+						Loading.show('对不起，球儿没进');
+						Drawer.show();
+						scoreBoard.setScore(data.credit);
+					});
+				}
 			});
 		});
-		
-		// 获取游戏积分、登录等...
-		store.queryUserInfo(function(){
-
-		});
-
 		
 		MainMenu.show();
 		//点击按钮事件回调
@@ -287,6 +321,10 @@ window.onload = function(){
 				reset();
 			},
 			onScoreView : function(){
+				store.queryCoupons(function(data){
+
+				});
+
 				Modal.show({
 					title : '积分兑换',
 					sel : 'score'
@@ -320,6 +358,20 @@ window.onload = function(){
 			onScoreSelected : function(idx){
 				// 分数选择
 			}
+		});
+
+		// 获取游戏积分、登录等...
+		store.getUserCredit(function(data){
+			if(!data.custNum){
+				Loading.show('你还没登录');
+				return;
+			}
+
+			if(data.credit){
+				scoreBoard.setScore(data.credit);
+			}
+
+			Loading.hide();
 		});
 		
 
