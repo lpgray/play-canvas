@@ -195,6 +195,17 @@ window.onload = function(){
 				return false;
 			});
 
+			var $btnMinis = $dom.find('.btn-mini');
+
+			$($btnMinis[0]).bind('tap', function(){
+				cbs['onMineView'] && cbs['onMineView'].call();
+				return false;
+			});
+			$($btnMinis[1]).bind('tap', function(){
+				cbs['onShareView'] && cbs['onShareView'].call();
+				return false;
+			});
+
 			return {
 				show : function(){
 					$dom.css('display', 'block');
@@ -330,9 +341,9 @@ window.onload = function(){
 					var tmpl = '';
 					for(var i = 0, l = data.couponList.length; i < l ;i++){
 						var temp = data.couponList[i];
-						tmpl += '<div class="item" data-activeid="'+temp.activeId+'">';
-						tmpl += ' <h1>'+ temp.preValue +'券</h1>';
-						tmpl += ' <h2>'+ temp.credit +'分</h2>';
+						tmpl += '<div class="item" data-activeid="'+temp.activeId+'" data-purchase="'+temp.credit+'">';
+						tmpl += ' <img src="img/coupon_'+temp.preValue+'.png" alt="'+temp.preValue+'元券" />';
+						// tmpl += ' <h2>'+ temp.preValue +'元券</h2>';
 						tmpl += '</div>';
 					}
 
@@ -341,13 +352,26 @@ window.onload = function(){
 			},
 			onRuleView : function(){
 				Modal.show({
-					title : '游戏规则'
+					title : '游戏规则',
+					sel : 'words'
 				});
 			},
 			onTeamView : function(){
 				Modal.show({
 					title : '球队选择',
 					sel : 'team'
+				});
+			},
+			onShareView : function(){
+				Modal.show({
+					title : '分享游戏',
+					sel : 'share'
+				});
+			},
+			onMineView : function(){
+				Modal.show({
+					title : '我的战绩',
+					sel : 'mine'
 				});
 			}
 		};
@@ -364,9 +388,9 @@ window.onload = function(){
 					player.reset('P');
 				}
 			},
-			onScoreSelected : function(aid){
-				if(confirm('确认兑换？')){
-					store.exchangeCoupon({activeId : aid, count : 1}, function(data){
+			onScoreSelected : function(option){
+				if(confirm('确认消耗'+option.credit+'积分兑换吗？')){
+					store.exchangeCoupon({activeId : option.aid, count : 1}, function(data){
 						if(data.isPass != 'Y'){
 							Loading.show('请求接收失败');
 							return;

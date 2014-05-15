@@ -11,7 +11,10 @@ var Modal = (function(){
 
   $dom.find('.j-score-sel').on('tap', '.item', function(){
     $(this).addClass('active').siblings().removeClass('active');
-    funcScoreSel && funcScoreSel.call(this, $(this).data('activeid'));
+    funcScoreSel && funcScoreSel.call(this, {
+      aid : $(this).data('activeid'),
+      credit : $(this).data('purchase')
+    });
     return false;
   });
   $dom.find('.j-team-sel .item').on('tap', function(){
@@ -36,21 +39,8 @@ var Modal = (function(){
      * option : { title, html, sel : 'score' | 'team' }
      */
     show : function(option){
-      $dom.find('.j-team-sel').addClass('hide');
-      $dom.find('.j-score-sel').addClass('hide');
-      $dom.find('.j-words').addClass('hide');
-
-      if(option.sel){
-        if(option.sel === 'score'){
-          $dom.find('.j-score-sel').removeClass('hide');
-        }else if(option.sel === 'team'){
-          $dom.find('.j-team-sel').removeClass('hide');
-        }
-      }else{
-        $dom.find('h1').html(option.title);
-        $dom.find('.j-words').removeClass('hide');
-      }
-
+      $dom.find('.j-sel').addClass('hide');
+      $dom.find('.j-'+option.sel+'-sel').removeClass('hide');
       $dom.find('h1').html(option.title);
       $dom.css('display', 'block');
     },

@@ -25,6 +25,7 @@ var ScoreBoard = Class.extend(PaperItem, {
 		this.context.fillText('分数：' + number, this.left + fontLeft, this.top + fontTop);
 	},
 	setScore : function(number){
+		$('#J_modal_score').html(number);
 		number = number>>0;
 		if(number >= 10000){
 			number = (number/3000).toFixed(1) + 'k';

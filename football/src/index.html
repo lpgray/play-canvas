@@ -46,6 +46,9 @@
 		<div class="main-panel j_will_scale">
 			<div class="panel-inner">
 				<h1>疯狂射门</h1>
+				<div class="btns-top">
+					<a href="#" class="btn-mini mine"></a><a href="#" class="btn-mini share"></a>
+				</div>
 				<div class="btns-wrap">
 					<a href="#" class="btn btn-primary">开始游戏</a><a href="#" class="btn btn-primary">球员选择</a><a href="#" class="btn btn-primary">游戏规则</a><a href="#" class="btn btn-primary">积分兑换</a>
 				</div>
@@ -77,8 +80,11 @@
 			<div class="modal-content">
 				<h1>游戏说明</h1>
 				<div class="body-content">
-					<div class="j-words hide">游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明</div>
-					<div class="select-wrap hide j-team-sel clearfix">
+					<div class="j-words-sel j-sel hide">游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明游戏说明</div>
+					<div class="j-mine-sel j-sel hide">
+						<h3 style="width: 280px; margin: 0 auto; display: block;"><strong style="float:left">总获得积分</strong> <strong style="float:right" id="J_modal_score">10000</strong></h3>
+					</div>
+					<div class="select-wrap hide j-team-sel j-sel clearfix">
 						<div class="item active">
 							<img src="img/flag_bz.png" alt="">
 							<h2>巴西</h2>
@@ -90,7 +96,7 @@
 							<h2>西班牙</h2>
 						</div>
 					</div>
-					<div class="select-wrap hide j-score-sel clearfix">
+					<div class="select-wrap hide j-score-sel j-sel clearfix two-column">
 						<!-- <div class="item active">
 							<h1>1券</h1>
 							<h2>1000积分</h2>
@@ -98,6 +104,18 @@
 							<h1>5券</h1>
 							<h2>9999积分</h2>
 						</div> -->
+					</div>
+					<div class="select-wrap hide j-share-sel j-sel clearfix">
+						<a class="share_qzone item">
+							<img src="img/logo_03.png" alt="">
+							<h2>qzone分享</h2>
+						</a><a class="share_weibo item">
+							<img src="img/logo_05.png" alt="">
+							<h2>微博分享</h2>
+						</a><a class="share_renren item">
+							<img src="img/logo_07.png" alt="">
+							<h2>人人分享</h2>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -108,6 +126,7 @@
 		<div class="loading-wrap j_will_scale">
 			<div class="alert-wrap loading-content">
 				<div class="alert-inner">
+					<h1>提示</h1>
 					<p>正在加载游戏...</p>
 					<a href="#" class="btn">确认</a>
 				</div>
@@ -165,6 +184,7 @@
 	<script src="js/Loading.js"></script>
 	<script src="config.js"></script>
 	<script src="store.js"></script>
+	<script src="share.js"></script>
 	<script src="app.js"></script>
 </body>
 </html>
