@@ -1,3 +1,20 @@
+// 模拟checkLogin
+function checkLogin(callback){
+	$.ajax({
+		type: 'get',
+		url: 'moke/checkLogin.json',
+		success: function(data) {
+			callback(data);
+		},
+		error: function(code, text) {
+			alert(text);
+		},
+		dataType: 'json',
+		cache : false
+	})
+}
+
+
 var store = (function(){
 
 	function date2str(x, y) {
@@ -98,6 +115,10 @@ var store = (function(){
 					callback(data);
 				}
 			});
+		},
+		// 检测用户是否已经登录
+		checkLogin : function(callback){
+			checkLogin(callback);
 		}
 	}
 }())

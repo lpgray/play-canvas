@@ -1,3 +1,4 @@
+var USR_INFO = {};
 
 window.onload = function(){
 	
@@ -288,8 +289,10 @@ window.onload = function(){
 		//点击按钮事件回调
 		var buttonsCb = {
 			onStart : function(){
-				MainMenu.hide();
-				reset();
+				chkLogin(function(){
+					MainMenu.hide();
+					reset();
+				});
 			},
 			onScoreView : function(){
 				Modal.show({
@@ -390,25 +393,32 @@ window.onload = function(){
 			}
 		});
 
-		function fetchLogin(){
-			// 获取游戏积分、登录等...
-			store.getUserCredit(function(data){
-				if(!data.custNum){
-					Loading.show('你还没登录');
-					RES.unlogin();
-					return;
-				}
+		function chkLogin(success, fail){
+			if(USR_INFO.custNum){
+				success && success();
+				return;
+			}
 
-				if(data.credit){
-					scoreBoard.setScore(data.credit);
+			// 获取登录状态
+			store.checkLogin(function(data){
+				if(data.isLogon === 'N'){
+					Loading.show('您没有登录', function(){
+						RES.unlogin();
+						fail && fail();
+					});
+				}else{
+					fetchScore();
+					Loading.hide();
+					USR_INFO.custNum = data.custNum;
+					USR_INFO.nickName = data.nickName;
+					success && success();
 				}
-
-				Loading.hide();
 			});
 		}
-		fetchLogin();
+		chkLogin();
 
 		function fetchScore(){
+			// 获取用户当前积分
 			store.getUserCredit(function(data){
 				if(!data.custNum){
 					Loading.show('你还没登录');
