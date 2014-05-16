@@ -16,7 +16,7 @@ var store = (function(){
 
 	function ajax(option){
 		$.ajax({
-			type : 'post',
+			type : 'get',
 			data : option.data,
 			url : option.url,
 			success : function(data){

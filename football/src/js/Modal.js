@@ -13,7 +13,8 @@ var Modal = (function(){
     $(this).addClass('active').siblings().removeClass('active');
     funcScoreSel && funcScoreSel.call(this, {
       aid : $(this).data('activeid'),
-      credit : $(this).data('purchase')
+      credit : $(this).data('purchase'),
+      value : $(this).data('value')
     });
     return false;
   });

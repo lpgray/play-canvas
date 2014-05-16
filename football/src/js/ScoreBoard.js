@@ -27,9 +27,13 @@ var ScoreBoard = Class.extend(PaperItem, {
 	setScore : function(number){
 		$('#J_modal_score').html(number);
 		number = number>>0;
+		this.score = number;
 		if(number >= 10000){
 			number = (number/3000).toFixed(1) + 'k';
 		}
 		this.number = number;
+	},
+	getScore : function(){
+		return this.score;
 	}
 });

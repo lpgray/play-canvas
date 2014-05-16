@@ -198,10 +198,20 @@ window.onload = function(){
 			var $btnMinis = $dom.find('.btn-mini');
 
 			$($btnMinis[0]).bind('tap', function(){
-				cbs['onMineView'] && cbs['onMineView'].call();
+				cbs['onMineView'] && cbs['onQuitView'].call();
 				return false;
 			});
-			$($btnMinis[1]).bind('tap', function(){
+			$($btnMinis[2]).bind('tap', function(){
+				cbs['onShareView'] && cbs['onShareView'].call();
+				return false;
+			});
+
+			var $topPanelBtns = $('#J_toppanel').find('.btn-mini');
+			$($topPanelBtns[0]).bind('tap', function(){
+				MainMenu.show();
+				return false;
+			});
+			$($topPanelBtns[2]).bind('tap', function(){
 				cbs['onShareView'] && cbs['onShareView'].call();
 				return false;
 			});
@@ -219,55 +229,6 @@ window.onload = function(){
 			}
 		}());
 
-		var Drawer = (function(){
-			var $dom = $('#J_drawer');
-
-			var cbs;
-
-			var closed = true;
-
-			$dom.find('.toggle').on('tap', function(){
-				if(closed){
-					Drawer.show();
-					closed = false;
-				}else{
-					Drawer.hide();
-					closed = true;
-				}
-			});
-
-			var $btns = $dom.find('.btn');
-			$($btns[0]).bind('tap', function(){
-				cbs['onStart'] && cbs['onStart'].call();
-				return false;
-			});
-			$($btns[1]).bind('tap', function(){
-				cbs['onTeamView'] && cbs['onTeamView'].call();
-				return false;
-			});
-			$($btns[2]).bind('tap', function(){
-				cbs['onRuleView'] && cbs['onRuleView'].call();
-				return false;
-			});
-			$($btns[3]).bind('tap', function(){
-				cbs['onScoreView'] && cbs['onScoreView'].call();
-				return false;
-			});
-
-			return {
-				show : function(){
-					$dom.removeClass('drawer-close');
-				},
-				config : function(option){
-					cbs = option;
-				},
-				hide : function(){
-					$dom.addClass('drawer-close');
-				}
-			}
-		}());
-
-		// Loading.hide();
 
 		buttons.onTouchStart(function(){
 			pb.prepare();
@@ -293,30 +254,30 @@ window.onload = function(){
 			store.submitResult(params, function(data){
 				
 				if(data.isPass == 'N'){
-					Loading.show('请求失败');
+					Loading.show('系统异常，请检查网络或稍后重试！');
 					return;
 				}
 
 				if(data.isCanUsed == 'N'){
-					Loading.show('未开启');
+					Loading.show('活动未开启');
 					return;
 				}
 
 				if(data.isMaxTimes == 'Y'){
-					Loading.show('今日游戏次数已达上限');
+					Loading.show('您当天的游戏次数已用完');
 					return;
 				}
 
 				if(data.isWin == 'Y'){
 					shoot(duration, 1, true, function(){
-						Loading.show('恭喜，球儿进了');
-						Drawer.show();
+						Loading.show('进球了，获得 '+data.addCredit+' 积分', reset);
+						// Drawer.show();
 						scoreBoard.setScore(data.credit);
 					});
 				}else{
 					shoot(duration, 0, false, function(){
-						Loading.show('对不起，球儿没进');
-						Drawer.show();
+						Loading.show('没关系，继续努力', reset);
+						// Drawer.show();
 						scoreBoard.setScore(data.credit);
 					});
 				}
@@ -328,7 +289,6 @@ window.onload = function(){
 		var buttonsCb = {
 			onStart : function(){
 				MainMenu.hide();
-				Drawer.hide();
 				reset();
 			},
 			onScoreView : function(){
@@ -341,7 +301,8 @@ window.onload = function(){
 					var tmpl = '';
 					for(var i = 0, l = data.couponList.length; i < l ;i++){
 						var temp = data.couponList[i];
-						tmpl += '<div class="item" data-activeid="'+temp.activeId+'" data-purchase="'+temp.credit+'">';
+						tmpl += '<div class="item" data-activeid="'+temp.activeId+'" data-value="'+temp.preValue+'" data-purchase="'+temp.credit+'">';
+						tmpl += ' <h2>'+temp.credit+'积分</h2>';
 						tmpl += ' <img src="img/coupon_'+temp.preValue+'.png" alt="'+temp.preValue+'元券" />';
 						// tmpl += ' <h2>'+ temp.preValue +'元券</h2>';
 						tmpl += '</div>';
@@ -373,10 +334,14 @@ window.onload = function(){
 					title : '我的战绩',
 					sel : 'mine'
 				});
+			},
+			onQuitView : function(){
+				if(confirm('退出游戏？')){
+					RES.quitGame();
+				}
 			}
 		};
 		MainMenu.config(buttonsCb);
-		Drawer.config(buttonsCb);
 
 		Modal.config({
 			onTeamSelected : function(idx){
@@ -389,38 +354,48 @@ window.onload = function(){
 				}
 			},
 			onScoreSelected : function(option){
-				if(confirm('确认消耗'+option.credit+'积分兑换吗？')){
+				if(confirm('你确定要兑换'+ option.value +'元现金券吗？')){
+
+					// 与我的当前积分判断
+					var score = scoreBoard.getScore();
+					if(score <= option.credit){
+						Loading.show('你没有那么多积分哦，快去踢球赚积分吧。');
+						return;
+					}
+
 					store.exchangeCoupon({activeId : option.aid, count : 1}, function(data){
 						if(data.isPass != 'Y'){
-							Loading.show('请求接收失败');
+							Loading.show('系统异常，请检查网络或稍后重试！');
 							return;
 						}
 
 						if(data.isMaxTimes == 1){
-							Loading.show('达到此券今日兑奖上限');
+							Loading.show('你已经不能再换这张卷了,换其他的卷试试吧.');
 							return;
 						}
 						if(data.isMaxTimes == 2){
-							Loading.show('达到此券总次数上限');
+							Loading.show('这张卷已经发完了,换其他的卷试试吧.');
 							return;
 						}
 
 						if(data.result != 'Y'){
-							Loading.show('兑换失败');
+							Loading.show('兑换失败，请刷新页面后重新打开。');
 						}else{
-							Loading.show('兑换成功');
+							Loading.show('<p style="font-size: .8em; margin: 0; padding: 0">恭喜你获得了一张'+option.value+'元现金卷，你可以前往【我的易购】中的【我的现金卷】中查询。</p>');
 							Modal.hide();
+							fetchScore();
 						}
 					});
 				}
 			}
 		});
 
-		function fetchScore(){
+		function fetchLogin(){
 			// 获取游戏积分、登录等...
 			store.getUserCredit(function(data){
 				if(!data.custNum){
 					Loading.show('你还没登录');
+					RES.unlogin();
 					return;
 				}
 
@@ -431,7 +406,21 @@ window.onload = function(){
 				Loading.hide();
 			});
 		}
-		fetchScore();
+		fetchLogin();
+
+		function fetchScore(){
+			store.getUserCredit(function(data){
+				if(!data.custNum){
+					Loading.show('你还没登录');
+					RES.unlogin();
+					return;
+				}
+
+				if(data.credit){
+					scoreBoard.setScore(data.credit);
+				}
+			});
+		}
 
 		
 		
