@@ -42,7 +42,8 @@ var store = (function(){
 			error : function(code, text){
 				alert(text);
 			},
-			dataType : 'json'
+			dataType : 'json',
+			cache : false
 		})
 	}
 

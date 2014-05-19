@@ -10,7 +10,7 @@
 	 * Paper Definition
 	 * the main painting paper.
 	 */
-	var Paper = (function() {
+	var PaperSingle = (function() {
 		var items = {};
 		var ctx = null;
 		var canvas = null;
@@ -44,6 +44,42 @@
 			}
 		}
 	}());
+
+	var Paper = function(){
+		this.items = {};
+		this.canvas = null;
+		this.ctx = null;
+	}
+	Paper.prototype = {
+		run: function() {
+			var _ = this;
+			if (!_.ctx) {
+				alert('Error, context not set!');
+				return;
+			}
+
+			_.ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+			for (var k in _.items) {
+				_.items[k].draw(_.ctx);
+			}
+
+			requestAnimationFrame(function() {
+				_.run();
+			});
+		},
+		addItem: function(key, obj) {
+			obj.setContext(this.ctx);
+			this.items[key] = obj;
+		},
+		removeItem: function(key) {
+			delete this.items[key];
+		},
+		setCanvas: function(c) {
+			this.canvas = c;
+			this.ctx = c.getContext('2d');
+		}
+	}
 
 	/**
 	 * PaperItem Class Definition

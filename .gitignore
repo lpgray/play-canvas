@@ -20,3 +20,4 @@ node_modules
 /bet-game/node_modules
 
 *.rar
+*.zip
