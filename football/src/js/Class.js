@@ -32,4 +32,4 @@
 	}
 
 	global.Class = Class;
-}(window))
+}(window));

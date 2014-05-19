@@ -14,10 +14,9 @@ results
 npm-debug.log
 node_modules
 
-/bet-game/temp
-/bet-game/build
-/bet-game/doc
-/bet-game/node_modules
+temp
+build
+doc
 
 *.rar
 *.zip
