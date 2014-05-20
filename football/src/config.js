@@ -3,13 +3,12 @@ var RES = {
 		brazilPlayer : 'img/0002.png',
 		argentineanPlayer : 'img/0001.png',
 		portuguesePlayer : 'img/0003.png',
-		course : 'img/bg-2.jpg',
+		course : 'img/area.jpg',
 		keeper : 'img/0004.png',
 		ball : 'img/ball.png',
-		scoreBoard: 'img/score-board.png',
-		gate : 'img/gate.png'
+		scoreBoard: 'img/score-board.png'
 	},
-	imgNumber : 8,
+	imgNumber : 7,
 	key : 'abc123',
 	sourceCode : 'h5',
 	unlogin : function(){

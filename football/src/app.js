@@ -5,7 +5,6 @@ window.onload = function(){
 	// alert(navigator.userAgent);
 	// Canvas Context
 	var canvas = document.getElementById('J_canvas');
-	var canvas2 = document.getElementById('J_canvas2');
 	var scale = 1; // other image to scale by the number
 	var resource = {}; // image resource
 
@@ -37,18 +36,15 @@ window.onload = function(){
 	if(cW < wW){
 		canvasLeft = parseInt((wW - cW)/2);
 		canvas.style.marginLeft = canvasLeft + 'px';
-		canvas2.style.marginLeft = canvasLeft + 'px';
 	}
 	window.canvasLeft = canvasLeft;
 
 	canvas.width = cW;
 	canvas.height = cH;
-	canvas2.width = cW;
-	canvas2.height = cH;
 
 	// 暴露 canvas和缩放值
 	window.canvas = canvas;
-	window.canvas2 = canvas2;
+	// window.canvas2 = canvas2;
 	window.scale = scale;
 
 	// 缩放
@@ -89,7 +85,6 @@ window.onload = function(){
 	var appInit = function(){
 		// console.info('App init calling...', resourse);
 		var context = canvas.getContext('2d');
-		var context2 = canvas2.getContext('2d');
 
 		// Init Course
 		var course = new Background();
@@ -97,25 +92,25 @@ window.onload = function(){
 		course.draw(context);
 
 		// Init Course
-		var gate = new Background();
-		gate.img = resourse['gate'];
-		gate.draw(context2);
+		// var gate = new Background();
+		// gate.img = resourse['gate'];
+		// gate.draw(context);
 
 		// Init Player
 		var player = new Shooter();
-		player.setContext(context2);
+		player.setContext(context);
 		player.reset();
 
 		// Init Ball
 		var ball = new Ball();
 		ball.img = resourse['ball'];
-		ball.setContext(context2);
+		ball.setContext(context);
 		ball.reset();
 
 		// Init Goalkeeper
 		var keeper = new Goalkeeper();
 		keeper.img = resourse['keeper'];
-		keeper.setContext(context2);
+		keeper.setContext(context);
 		keeper.reset();
 
 		// Init ScoreBoard
@@ -135,19 +130,19 @@ window.onload = function(){
 		var paper = new Paper();
 		paper.setCanvas(canvas);
 		paper.addItem('course', course);
-		// paper.addItem('keeper', keeper);
-		// paper.addItem('ball', ball);
-		// paper.addItem('player', player);
+		paper.addItem('keeper', keeper);
+		paper.addItem('ball', ball);
+		paper.addItem('player', player);
 		paper.addItem('scoreBoard', scoreBoard);
 		paper.run();
 
-		var paper2 = new Paper();
-		paper2.setCanvas(canvas2);
-		paper2.addItem('gate', gate);
-		paper2.addItem('keeper', keeper);
-		paper2.addItem('ball', ball);
-		paper2.addItem('player', player);
-		paper2.run();
+		// var paper2 = new Paper();
+		// paper2.setCanvas(canvas2);
+		// paper2.addItem('gate', gate);
+		// paper2.addItem('keeper', keeper);
+		// paper2.addItem('ball', ball);
+		// paper2.addItem('player', player);
+		// paper2.run();
 
 		var timer, timer1;
 		function shoot(duration, focus, success, callback){
