@@ -43,7 +43,8 @@ a.btn:active,.btn:active{background-position: 0 -53px}
 .modal .close{width: 57px;height: 53px;background-image: url(../img/btn-close.png);background-position:0 0;position: absolute;right: 20px;top:20px;background-size: 100%;font-size: 0;text-align: -99999px;}
 .modal .modal-content{overflow: hidden;}
 .modal h1{text-align: center; margin: 50px 0 20px;}
-.modal .body-content{color: #fff; font-size: 1.5em; margin: 0 50px; height: 250px; overflow-y: auto; text-shadow: 0 2px 2px #000, 2px 0 2px #000, 0 -2px 2px #000, -2px 0 2px #000; line-height: 35px;}
+.modal .body-content{color: #fff; font-size: 1.5em; margin: 0 50px; text-shadow: 0 2px 2px #000, 2px 0 2px #000, 0 -2px 2px #000, -2px 0 2px #000; line-height: 35px;}
+.modal .body-content > div{height: 250px; overflow-y: auto;}
 .modal .select-wrap{text-align: center; height: 200px; margin-top: 20px;}
 .modal .select-wrap .item{position: relative;display: inline-block;width: 150px; height: 104px; margin: 10px; border-radius: 8px;border: 5px solid #BDBDBD;}
 .modal .select-wrap .item img{width: 100%;}
@@ -51,9 +52,14 @@ a.btn:active,.btn:active{background-position: 0 -53px}
 .modal .select-wrap .item h2{background: url(../img/highlight-bg.png) center center no-repeat; height: 55px; width: 150px;line-height: 55px;font-size: 1.2em}
 .modal .select-wrap .active{border: 5px solid #fff;}
 .modal .select-wrap a.item{color: #fff; text-decoration: none;}
-.modal .two-column{width: 540px; margin: 0 auto; height: 250px;}
-.modal .two-column .item{margin: 5px 10px 0 10px;overflow: hidden;}
+.modal .body-content > div.two-column{width: 540px; margin: 0 auto; height: 300px;}
+.modal .two-column .item{margin: 10px;overflow: hidden;}
 .modal .two-column .item h2{position: absolute; left: 0; top: 0;background: none; font-size: .8em}
+.modal-scale{position: absolute;width: 640px; height: 400px; left: -320px; margin-left: 50%;}
+.full-screen-modal{width: 800px; height: 480px; left: -400px;}
+.full-screen-modal .modal{width: 800px; height: 480px;background-image: url(../img/modal-bg.png);margin:0;}
+.modal .checkbox{margin-top: 30px; font-size: 20px}
+.modal .checkbox input[type=checkbox]{width: 30px; height: 30px; display: inline-block; vertical-align: top; margin-top: 2px}
 
 .top-panel{position: fixed; top: 0; width: 800px; left: 50%; margin-left: -400px; z-index: 4;}
 
@@ -65,6 +71,7 @@ a.btn:active,.btn:active{background-position: 0 -53px}
 .alert-inner > div{margin-top: .5em;}
 .alert-wrap .btn{width: 120px; height: 38px; font-size: .8em; line-height: 38px; margin-top: 1em}
 .alert-wrap .btn:active{background-position: 0 -38px;}
+.loading-ctn img{vertical-align: middle;margin-top: 30px;position: relative;top: -19px;}
 
 .drawer-wrap{transition: top .5s;-webkit-transition: top .5s;width: 100%; height: 50px; position: fixed; top: -1px; left: 0;z-index: 4;background: rgba(0,0,0,.8);}
 .drawer-close{top: -50px;}

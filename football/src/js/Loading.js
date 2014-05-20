@@ -1,8 +1,9 @@
 var Loading = (function(){
   var dom = document.getElementById('J_loading');
   var textCtn = document.getElementById('J_loadingctn');
+  var okBtn = document.getElementById('J_loadingBtn');
 
-  var okFn;
+  var okFn, hideFn;
 
   $(dom).find('.btn').on('tap', function(){
     Loading.hide();
@@ -13,12 +14,27 @@ var Loading = (function(){
   return {
     show : function(text, okCallback){
       var v = text || 'loading...';
-      textCtn.innerHTML = text;
       dom.style.display = 'block';
-      okFn = okCallback;
+      okBtn.style.display = 'inline-block';
+
+      if(typeof okCallback =='function'){
+        okFn = okCallback;
+      }else if(okCallback === true){
+        okBtn.style.display = 'none';
+        v = '<img src="img/loading.gif" alt="" /> ' + v;
+      }
+      textCtn.innerHTML = v;
     },
     hide : function(){
       dom.style.display = 'none';
+      clearTimeout(hideFn);
+    },
+    hideAfter : function(pause, fn){
+      console.info('ddd');
+      hideFn = setTimeout(function(){
+        Loading.hide();
+        fn.call(Loading);
+      }, pause);
     }
   }
 }());

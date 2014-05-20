@@ -59,7 +59,7 @@ window.onload = function(){
 		'-o-transform' : 'scale('+ scale +')'
 	});
 	
-	Loading.show('正在加载游戏...');
+	Loading.show('正在加载游戏...', true);
 
 	var loadedNumber = 0;
 	var imagesNumber = RES.imgNumber;
@@ -199,41 +199,48 @@ window.onload = function(){
 			var cbs;
 
 			var $btns = $dom.find('.btn-primary');
-			$($btns[0]).bind('tap', function(){
+			$($btns[0]).bind('tap', function(e){
 				cbs['onStart'] && cbs['onStart'].call();
+				e.preventDefault();
 				return false;
 			});
-			$($btns[1]).bind('tap', function(){
+			$($btns[1]).bind('tap', function(e){
 				cbs['onTeamView'] && cbs['onTeamView'].call();
+				e.preventDefault();
 				return false;
 			});
-			$($btns[2]).bind('tap', function(){
+			$($btns[2]).bind('tap', function(e){
 				cbs['onRuleView'] && cbs['onRuleView'].call();
 				return false;
 			});
-			$($btns[3]).bind('tap', function(){
+			$($btns[3]).bind('tap', function(e){
 				cbs['onScoreView'] && cbs['onScoreView'].call();
+				e.preventDefault();
 				return false;
 			});
 
 			var $btnMinis = $dom.find('.btn-mini');
 
-			$($btnMinis[0]).bind('tap', function(){
+			$($btnMinis[0]).bind('tap', function(e){
 				cbs['onMineView'] && cbs['onQuitView'].call();
+				e.preventDefault();
 				return false;
 			});
-			$($btnMinis[2]).bind('tap', function(){
+			$($btnMinis[2]).bind('tap', function(e){
 				cbs['onShareView'] && cbs['onShareView'].call();
+				e.preventDefault();
 				return false;
 			});
 
 			var $topPanelBtns = $('#J_toppanel').find('.btn-mini');
-			$($topPanelBtns[0]).bind('tap', function(){
+			$($topPanelBtns[0]).bind('tap', function(e){
 				MainMenu.show();
+				e.preventDefault();
 				return false;
 			});
-			$($topPanelBtns[2]).bind('tap', function(){
+			$($topPanelBtns[2]).bind('tap', function(e){
 				cbs['onShareView'] && cbs['onShareView'].call();
+				e.preventDefault();
 				return false;
 			});
 
@@ -292,20 +299,23 @@ window.onload = function(){
 				if(data.isWin == 'Y'){
 					shoot(duration, 1, true, function(){
 						Loading.show('进球了，获得 '+data.addCredit+' 积分', reset);
-						// Drawer.show();
+						Loading.hideAfter(2000, function(){
+							reset();
+						});
 						scoreBoard.setScore(data.credit);
 					});
 				}else{
 					shoot(duration, 0, false, function(){
 						Loading.show('没关系，继续努力', reset);
-						// Drawer.show();
+						Loading.hideAfter(2000, function(){
+							reset();
+						});
 						scoreBoard.setScore(data.credit);
 					});
 				}
 			});
 		});
 		
-		MainMenu.show();
 		//点击按钮事件回调
 		var buttonsCb = {
 			onStart : function(){
@@ -423,6 +433,7 @@ window.onload = function(){
 			store.checkLogin(function(data){
 				if(data.isLogon === 'N'){
 					Loading.show('您没有登录', function(){
+						Loading.hide();
 						RES.unlogin();
 						fail && fail();
 					});
@@ -452,9 +463,31 @@ window.onload = function(){
 			});
 		}
 
-		
-		
+		/**
+		 * 检测是否需要自动弹出游戏规则窗口
+		 */
+		function isHelpShow(){
+			if(localStorage){
+				var r = localStorage.getItem('willNotShowHelpModal');
+				return r != 1;
+			}
 
+			return true;
+		}
+		if (isHelpShow()) {
+			Modal.show({
+				title: '游戏规则',
+				sel: 'words',
+				remember : true
+			}, function(){
+				if(localStorage){
+					localStorage.setItem('willNotShowHelpModal', 1);
+				}
+			});
+		}
+
+		// 展示主面板
+		MainMenu.show();
 
 		// reset();
 

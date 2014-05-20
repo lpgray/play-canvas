@@ -4,10 +4,12 @@ var Modal = (function(){
   var $close = $dom.find('.close');
   $close.bind('tap', function(){
     $dom.css('display', 'none');
+    closeCallback && closeCallback.call(Modal);
+    closeCallback = null;
     return false;
   });
 
-  var funcTeamSel, funcScoreSel;
+  var funcTeamSel, funcScoreSel, closeCallback;
 
   $dom.find('.j-score-sel').on('tap', '.item', function(){
     $(this).addClass('active').siblings().removeClass('active');
@@ -24,6 +26,8 @@ var Modal = (function(){
     return false;
   });
 
+
+
   return {
     // onTeamSelected : function(cb){
     //   funcTeamSel = cb;
@@ -39,11 +43,19 @@ var Modal = (function(){
      * 展示面板
      * option : { title, html, sel : 'score' | 'team' }
      */
-    show : function(option){
+    show : function(option, closeFn){
+      if(option.sel === 'score'){
+        $dom.children('.modal-scale').addClass('full-screen-modal');
+      }else{
+        $dom.children('.modal-scale').removeClass('full-screen-modal');
+      }
+
       $dom.find('.j-sel').addClass('hide');
       $dom.find('.j-'+option.sel+'-sel').removeClass('hide');
       $dom.find('h1').html(option.title);
       $dom.css('display', 'block');
+
+      closeCallback = closeFn;
     },
     setScorePanel : function(tmpl){
       $dom.find('.j-score-sel').html(tmpl);
