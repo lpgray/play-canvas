@@ -322,6 +322,11 @@ window.onload = function(){
 			onStart : function(){
 				chkLogin(function(){
 					MainMenu.hide();
+					
+					if (isHelpShow()) {
+						Modal.showWhite();
+					}
+
 					// 判断是否需要进行选择队伍
 					var teamSel = getTeamSel();
 					if(teamSel){
@@ -416,7 +421,7 @@ window.onload = function(){
 
 					// 与我的当前积分判断
 					var score = scoreBoard.getScore();
-					if(score <= option.credit){
+					if(score < option.credit){
 						Loading.show('你没有那么多积分哦，快去踢球赚积分吧。');
 						return;
 					}
@@ -440,6 +445,9 @@ window.onload = function(){
 							Loading.show('兑换失败，请刷新页面后重新打开。');
 						}else{
 							Loading.show('<p style="font-size: .8em; margin: 0; padding: 0">恭喜你获得了一张'+option.value+'元现金卷，你可以前往【我的易购】中的【我的现金卷】中查询。</p>');
+							scoreBoard.setScore();
+							USR_INFO.credit = score - option.credit;
+							buttonsCb.onScoreView();
 						}
 					});
 				}
@@ -461,24 +469,25 @@ window.onload = function(){
 						fail && fail();
 					});
 				}else{
-					fetchScore();
-					Loading.hide();
 					USR_INFO.custNum = data.custNum;
 					USR_INFO.nickName = data.nickName;
+					fetchScore(USR_INFO.custNum);
+					Loading.hide();
 					// $('#J_profile').html(USR_INFO.nickName);
 					scoreBoard.setNickname(USR_INFO.nickName);
 					success && success();
 				}
 			});
 		}
-		chkLogin();
 
 		function fetchScore(){
 			// 获取用户当前积分
-			store.getUserCredit(function(data){
-				if(!data.custNum){
-					Loading.show('你还没登录');
-					RES.unlogin();
+			store.getUserCredit(USR_INFO.custNum, function(data){
+				// console.info(data.custNum, USR_INFO.custNum);
+				if(!data.custNum || data.custNum !== USR_INFO.custNum){
+					Loading.show('你还没登录', function(){
+						RES.unlogin();
+					});
 					return;
 				}
 
@@ -510,12 +519,11 @@ window.onload = function(){
 			}
 		}
 
+		chkLogin();
 		// 展示主面板
 		MainMenu.show();
 
-		if (isHelpShow()) {
-			Modal.showWhite();
-		}
+		
 
 		// reset();
 

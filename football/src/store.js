@@ -58,10 +58,13 @@ var store = (function(){
 
 	return {
 		// 查询用户个人信息
-		getUserCredit : function(callback){
+		getUserCredit : function(custNum, callback){
 			ajax({
 				// url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/userCredit.htm',
-				url : 'moke/login.json',
+				url : 'moke/getCredit.json',
+				data : {
+					custNum : custNum
+				},
 				success : function(data){
 					callback(data);
 				}
@@ -79,14 +82,18 @@ var store = (function(){
 		},
 		// 提交服务器后端获取射门结果
 		submitResult : function(params, callback){
+			var current = date2str(new Date(), 'yyyyMMddhhmmss');
 			var signObj = {
 				key : RES.key,
 				sourceCode : RES.sourceCode,
 				point : params.point,
-				time : date2str(new Date(), 'yyyyMMddhhmmss')
+				time : current
 			}
 
 			params.sign = getSign(signObj);
+			params.custNum = USR_INFO.custNum;
+			params.time = current;
+			params.sourceCode = RES.sourceCode;
 
 			ajax({
 				// url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/submitResult.htm',
@@ -107,6 +114,8 @@ var store = (function(){
 			}
 
 			params.sign = getSign(signObj);
+			params.custNum = USR_INFO.custNum;
+			params.sourceCode = RES.sourceCode;
 
 			ajax({
 				// url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/exchangeCoupon.htm',
