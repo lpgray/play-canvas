@@ -14,6 +14,7 @@ var ScoreBoard = Class.extend(PaperItem, {
 	draw : function(){
 		this.reset();
 		this.drawNumber();
+		this.drawNickname();
 	},
 	drawNumber : function(){
 		var number = this.number || 0;
@@ -24,6 +25,15 @@ var ScoreBoard = Class.extend(PaperItem, {
 		this.context.fillStyle = '#fff';
 		this.context.fillText('分数：' + number, this.left + fontLeft, this.top + fontTop);
 	},
+	drawNickname : function(){
+		var nickname = this.nickname || '未登录';
+		var fontSize = 26 * scale;
+		var fontTop = 50 * scale;
+		var fontLeft = 200 * scale;
+		this.context.font = "bold "+ parseInt(fontSize) +"px sans-serif";
+		this.context.fillStyle = '#fff';
+		this.context.fillText(nickname, this.left - fontLeft, this.top + fontTop);
+	},
 	setScore : function(number){
 		$('#J_modal_score').html(number);
 		number = number>>0;
@@ -32,6 +42,9 @@ var ScoreBoard = Class.extend(PaperItem, {
 			number = (number/3000).toFixed(1) + 'k';
 		}
 		this.number = number;
+	},
+	setNickname : function(n){
+		this.nickname = n;
 	},
 	getScore : function(){
 		return this.score;

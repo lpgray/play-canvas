@@ -2,7 +2,7 @@ var SelectButtons = Class.create({
 	init : function() {
 		var self = this;
 		var top = 60 * scale;
-		var left = 215 * scale + canvasLeft;
+		var left = 215 * scale;
 		var width = 123 * scale;
 		var height = 47 * scale;
 		var arrawWidth = 36 * scale;

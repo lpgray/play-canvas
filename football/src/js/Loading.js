@@ -30,7 +30,6 @@ var Loading = (function(){
       clearTimeout(hideFn);
     },
     hideAfter : function(pause, fn){
-      console.info('ddd');
       hideFn = setTimeout(function(){
         Loading.hide();
         fn.call(Loading);

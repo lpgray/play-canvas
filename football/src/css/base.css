@@ -10,3 +10,7 @@ ul, ol{margin:0; padding: 0 0 0 20px;}
 * html .clearfix{height: 1%;}
 
 .hide{display: none;}
+
+.tc{text-align: center;}
+
+a{outline: none;}

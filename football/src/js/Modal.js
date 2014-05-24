@@ -1,7 +1,9 @@
 var Modal = (function(){
   var $dom = $('#J_modal');
 
-  var $close = $dom.find('.close');
+  var $white = $('#J_whiteModal');
+
+  var $close = $dom.find('.j_close');
   $close.bind('tap', function(){
     $dom.css('display', 'none');
     closeCallback && closeCallback.call(Modal);
@@ -12,7 +14,13 @@ var Modal = (function(){
   var funcTeamSel, funcScoreSel, closeCallback;
 
   $dom.find('.j-score-sel').on('tap', '.item', function(){
-    $(this).addClass('active').siblings().removeClass('active');
+    var _ = $(this);
+    _.addClass('active').siblings().removeClass('active');
+    
+    if(_.find('.not').length > 0){
+      return false;
+    }
+
     funcScoreSel && funcScoreSel.call(this, {
       aid : $(this).data('activeid'),
       credit : $(this).data('purchase'),
@@ -26,22 +34,19 @@ var Modal = (function(){
     return false;
   });
 
-
-
+  $white.find('.j_close').on('tap', function(){
+    $white.addClass('hide');
+    if(localStorage){
+      localStorage.setItem('willNotShowHelpModal', 1);
+    }
+  });
   return {
-    // onTeamSelected : function(cb){
-    //   funcTeamSel = cb;
-    // },
-    // onScoreSelected : function(cb){
-    //   funcScoreSel = cb;
-    // },
     config : function(option){
       funcScoreSel = option.onScoreSelected;
       funcTeamSel = option.onTeamSelected;
     },
     /**
      * 展示面板
-     * option : { title, html, sel : 'score' | 'team' }
      */
     show : function(option, closeFn){
       if(option.sel === 'score'){
@@ -58,10 +63,13 @@ var Modal = (function(){
       closeCallback = closeFn;
     },
     setScorePanel : function(tmpl){
-      $dom.find('.j-score-sel').html(tmpl);
+      $('#J_score').html(tmpl);
     },
     hide : function(){
       $dom.css('display', 'none');
+    },
+    showWhite : function(){
+      $white.removeClass('hide');
     }
   };
 }());

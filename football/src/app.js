@@ -33,14 +33,19 @@ window.onload = function(){
 	}
 
 	var canvasLeft = 0;
+	var $wrap = $('#J_wrap');
 	if(cW < wW){
 		canvasLeft = parseInt((wW - cW)/2);
-		canvas.style.marginLeft = canvasLeft + 'px';
+		// canvas.style.marginLeft = canvasLeft + 'px';
 	}
-	window.canvasLeft = canvasLeft;
+	// window.canvasLeft = canvasLeft;
 
 	canvas.width = cW;
 	canvas.height = cH;
+
+	$wrap.width(canvas.width);
+	$wrap.height(canvas.height);
+	$wrap.css('margin-left', parseInt((wW - cW)/2));
 
 	// 暴露 canvas和缩放值
 	window.canvas = canvas;
@@ -191,7 +196,7 @@ window.onload = function(){
 		var MainMenu = (function(){
 			var $dom = $('#J_mainPanel');
 
-			var cbs;
+			var cbs = {};
 
 			var $btns = $dom.find('.btn-primary');
 			$($btns[0]).bind('tap', function(e){
@@ -221,19 +226,18 @@ window.onload = function(){
 				e.preventDefault();
 				return false;
 			});
-			$($btnMinis[2]).bind('tap', function(e){
+			$($btnMinis[1]).bind('tap', function(e){
 				cbs['onShareView'] && cbs['onShareView'].call();
 				e.preventDefault();
 				return false;
 			});
 
-			var $topPanelBtns = $('#J_toppanel').find('.btn-mini');
-			$($topPanelBtns[0]).bind('tap', function(e){
+			$('#J_BACK').bind('tap', function(e){
 				MainMenu.show();
 				e.preventDefault();
 				return false;
 			});
-			$($topPanelBtns[2]).bind('tap', function(e){
+			$('#J_SUB_SHARE').bind('tap', function(e){
 				cbs['onShareView'] && cbs['onShareView'].call();
 				e.preventDefault();
 				return false;
@@ -298,6 +302,7 @@ window.onload = function(){
 							reset();
 						});
 						scoreBoard.setScore(data.credit);
+						USR_INFO.credit = data.credit;
 					});
 				}else{
 					shoot(duration, 0, false, function(){
@@ -306,6 +311,7 @@ window.onload = function(){
 							reset();
 						});
 						scoreBoard.setScore(data.credit);
+						USR_INFO.credit = data.credit;
 					});
 				}
 			});
@@ -316,7 +322,17 @@ window.onload = function(){
 			onStart : function(){
 				chkLogin(function(){
 					MainMenu.hide();
-					reset();
+					// 判断是否需要进行选择队伍
+					var teamSel = getTeamSel();
+					if(teamSel){
+						player.reset(teamSel);
+						reset();
+					}else{
+						Modal.show({
+							title : '球队选择',
+							sel : 'team'
+						});
+					}
 				});
 			},
 			onScoreView : function(){
@@ -332,7 +348,9 @@ window.onload = function(){
 						tmpl += '<div class="item" data-activeid="'+temp.activeId+'" data-value="'+temp.preValue+'" data-purchase="'+temp.credit+'">';
 						tmpl += ' <h2>'+temp.credit+'积分</h2>';
 						tmpl += ' <img src="img/coupon_'+temp.preValue+'.png" alt="'+temp.preValue+'元券" />';
-						// tmpl += ' <h2>'+ temp.preValue +'元券</h2>';
+						if(parseInt(temp.credit) > parseInt(USR_INFO.credit)){
+							tmpl += '<div class="not">&nbsp;</div>';
+						}
 						tmpl += '</div>';
 					}
 
@@ -373,13 +391,25 @@ window.onload = function(){
 
 		Modal.config({
 			onTeamSelected : function(idx){
+				var sel = 0;
 				if(idx == 0){
 					player.reset('B');
+					sel = 'B';
 				}else if(idx == 1){
 					player.reset('A');
+					sel = 'A';
 				}else{
 					player.reset('P');
+					sel = 'P';
 				}
+
+				if(localStorage){
+					localStorage.setItem('teamSel', sel);
+				}
+
+				Modal.hide();
+				MainMenu.hide();
+				reset();
 			},
 			onScoreSelected : function(option){
 				if(confirm('你确定要兑换'+ option.value +'元现金券吗？')){
@@ -410,8 +440,6 @@ window.onload = function(){
 							Loading.show('兑换失败，请刷新页面后重新打开。');
 						}else{
 							Loading.show('<p style="font-size: .8em; margin: 0; padding: 0">恭喜你获得了一张'+option.value+'元现金卷，你可以前往【我的易购】中的【我的现金卷】中查询。</p>');
-							Modal.hide();
-							// fetchScore();
 						}
 					});
 				}
@@ -437,6 +465,8 @@ window.onload = function(){
 					Loading.hide();
 					USR_INFO.custNum = data.custNum;
 					USR_INFO.nickName = data.nickName;
+					// $('#J_profile').html(USR_INFO.nickName);
+					scoreBoard.setNickname(USR_INFO.nickName);
 					success && success();
 				}
 			});
@@ -454,6 +484,7 @@ window.onload = function(){
 
 				if(data.credit){
 					scoreBoard.setScore(data.credit);
+					USR_INFO.credit = data.credit;
 				}
 			});
 		}
@@ -469,20 +500,22 @@ window.onload = function(){
 
 			return true;
 		}
-		if (isHelpShow()) {
-			Modal.show({
-				title: '游戏规则',
-				sel: 'words',
-				remember : true
-			}, function(){
-				if(localStorage){
-					localStorage.setItem('willNotShowHelpModal', 1);
-				}
-			});
+		
+		/**
+		 * 读取本地存储的用户选队历史数据
+		 */
+		function getTeamSel(){
+			if(localStorage){
+				return localStorage.getItem('teamSel');
+			}
 		}
 
 		// 展示主面板
 		MainMenu.show();
+
+		if (isHelpShow()) {
+			Modal.showWhite();
+		}
 
 		// reset();
 
