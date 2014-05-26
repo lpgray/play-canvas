@@ -72,23 +72,6 @@
 			</div>
 		</div>
 	</div>
-	
-	<!-- <div id="J_drawer" class="drawer-wrap drawer-close">
-		<div class="drawer">
-			<div class="drawer-inner">
-				<h1>疯狂足球</h1>
-				<div class="ctrl-left">
-					<a href="###" class="btn">开始游戏</a><a href="###" class="btn">球员选择</a>
-				</div>
-				<div class="ctrl-right">
-					<a href="###" class="btn">游戏规则</a><a href="###" class="btn">积分兑换</a>
-				</div>
-				<div class="toggle">
-					<i></i>
-				</div>
-			</div>
-		</div>
-	</div> -->
 
 	<div id="J_modal" class="modal-wrap hide fixed-box">
 		<div class="j_will_scale modal-scale">
@@ -103,9 +86,6 @@
 							<div class="tc">
 								<a  class="j_close btn btn-primary btn-small">知道了</a>
 							</div>
-							<!-- <div class="checkbox">
-								<input type="checkbox"> 不再自动显示
-							</div> -->
 						</div>
 						<div class="j-mine-sel j-sel hide">
 							<h3 style="width: 280px; margin: 0 auto; display: block;"><strong style="float:left">总获得积分</strong> <strong style="float:right" id="J_modal_score">10000</strong></h3>
@@ -184,45 +164,24 @@
 	</div>
 
 	</div><!-- ./J_wrap -->
-
-	<!-- <div style="position: fixed; left: 0; top: 0; background: rgba(0,0,0,.6); color: #fff; height: 100%; overflow-y: auto; opacity: .3; z-index: 3; display: none">
-		<h2>守门员测试</h2>
-		<button id="J_reset">复位</button>
-		<button id="J_block">防守</button>
-		<button id="J_stop">停止</button>
-		<br>
-		<button id="J_moveLeft">左移</button>
-		<button id="J_moveRight">右移</button>
-		<button id="J_getBall">抓球</button>
-		<h2>射手测试</h2>
-		<button id="J_playerReset">复位</button>
-		<button id="J_shoot">射门</button>
-		<br>
-		<h2>射手选择</h2>
-		<button id="J_b">巴西</button>
-		<button id="J_a">阿根廷</button>
-		<button id="J_p">葡萄牙</button>
-		<h2>综合测试</h2>
-		<button id="J_allReset">复位</button>
-		<input id="J_focusIpt" type="text" style="width: 50px;" value="" placeholder="1:中，0:不中">
-		<br>
-		<button id="J_topLeft">左上</button>
-		<button id="J_top">上</button>
-		<button id="J_topRight">右上</button>
-		<br>
-		<button id="J_left">左</button>
-		<button id="J_middle">中</button>
-		<button id="J_right">右</button>
-		<br>
-		<button id="J_bottomLeft">左下</button>
-		<button id="J_bottom">下</button>
-		<button id="<J_bottomRight></J_bottomRight>">右下</button>
-	</div> -->
 	
-	<!-- build:js js/football.min.js -->
+	<script>
+	var USR_INFO = {
+		custNum : ''
+	};
+	</script>
+	
+	<!-- build:js js/assets.min.js -->
 	<script src="js/md5.js"></script>
 	<script src="js/zepto.min.js"></script>
 	<script src="js/zepto.touch.js"></script>
+	<!-- /build -->
+
+	<script src="config.js"></script>
+	<script src="store.js"></script>
+	<script src="share.js"></script>
+
+	<!-- build:js js/football.min.js -->
 	<script src="js/Paper.js"></script>
 	<script src="js/Class.js"></script>
 	<script src="js/Ball.js"></script>
@@ -234,9 +193,6 @@
 	<script src="js/ProgressBar.js"></script>
 	<script src="js/Modal.js"></script>
 	<script src="js/Loading.js"></script>
-	<script src="config.js"></script>
-	<script src="store.js"></script>
-	<script src="share.js"></script>
 	<script src="app.js"></script>
 	<!-- /build -->
 

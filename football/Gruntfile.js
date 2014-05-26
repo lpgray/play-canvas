@@ -7,12 +7,22 @@ module.exports = function(grunt) {
     banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n */',
     // Task configuration.
     concat: {
-      js: {
-        src: ['src/js/zepto.min.js'
+      assets : {
+        src : ['src/js/zepto.min.js'
           , 'src/js/zepto.touch.js'
-          , 'src/js/md5.js'
+          , 'src/js/md5.js'],
+        dest : 'build/js/assets.js'
+      },
+      program: {
+        src: [
+          // 'src/js/zepto.min.js'
+          // , 'src/js/zepto.touch.js'
+          // , 'src/js/md5.js'
+          // , 'src/config.js'
+          // , 'src/share.js'
+          // , 'src/store.js'
 
-          , 'src/js/Class.js'
+          'src/js/Class.js'
           , 'src/js/Paper.js'
           , 'src/js/Background.js'
           , 'src/js/Ball.js'
@@ -25,11 +35,8 @@ module.exports = function(grunt) {
           , 'src/js/SelectButtons.js'
           , 'src/js/Shooter.js'
 
-          , 'src/js/Class.js'
-          , 'src/config.js'
-          , 'src/share.js'
-          , 'src/store.js'
           , 'src/app.js'],
+
         dest: 'build/js/football.js'
       },
       // placeholderjs: {
@@ -44,7 +51,8 @@ module.exports = function(grunt) {
     uglify: {
       sngame: {
         files:{
-          'build/js/football.min.js' : 'build/js/football.js'
+          'build/js/football.min.js' : 'build/js/football.js',
+          'build/js/assets.min.js' : 'build/js/assets.js'
         }
       }
     },

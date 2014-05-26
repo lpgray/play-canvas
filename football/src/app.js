@@ -1,5 +1,3 @@
-var USR_INFO = {};
-
 window.onload = function(){
 	
 	// alert(navigator.userAgent);
@@ -457,27 +455,32 @@ window.onload = function(){
 		function chkLogin(success, fail){
 			if(USR_INFO.custNum){
 				success && success();
-				return;
+				Loading.hide();
+			}else{
+				Loading.show('您没有登录', function(){
+					RES.unlogin();
+					fail && fail();
+				});
 			}
+			return;
 
 			// 获取登录状态
-			store.checkLogin(function(data){
-				if(data.isLogon === 'N'){
-					Loading.show('您没有登录', function(){
-						Loading.hide();
-						RES.unlogin();
-						fail && fail();
-					});
-				}else{
-					USR_INFO.custNum = data.custNum;
-					USR_INFO.nickName = data.nickName;
-					fetchScore(USR_INFO.custNum);
-					Loading.hide();
-					// $('#J_profile').html(USR_INFO.nickName);
-					scoreBoard.setNickname(USR_INFO.nickName);
-					success && success();
-				}
-			});
+			// store.checkLogin(function(data){
+			// 	if(data.isLogon === 'N'){
+			// 		Loading.show('您没有登录', function(){
+			// 			Loading.hide();
+			// 			RES.unlogin();
+			// 			fail && fail();
+			// 		});
+			// 	}else{
+			// 		USR_INFO.custNum = data.custNum;
+			// 		USR_INFO.nickName = data.nickName;
+			// 		fetchScore(USR_INFO.custNum);
+			// 		// $('#J_profile').html(USR_INFO.nickName);
+			// 		scoreBoard.setNickname(USR_INFO.nickName);
+			// 		success && success();
+			// 	}
+			// });
 		}
 
 		function fetchScore(){

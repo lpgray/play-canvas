@@ -1,20 +1,3 @@
-// 模拟checkLogin
-function checkLogin(callback){
-	$.ajax({
-		type: 'get',
-		url: 'moke/checkLogin.json',
-		success: function(data) {
-			callback(data);
-		},
-		error: function(code, text) {
-			alert(text);
-		},
-		dataType: 'json',
-		cache : false
-	})
-}
-
-
 var store = (function(){
 
 	function date2str(x, y) {
@@ -32,19 +15,23 @@ var store = (function(){
 	}
 
 	function ajax(option){
-		$.ajax({
-			type : 'get',
-			data : option.data,
-			url : option.url,
-			success : function(data){
-				option.success(data);
-			},
-			error : function(code, text){
-				alert(text);
-			},
-			dataType : 'json',
-			cache : false
-		})
+		try{
+			$.ajax({
+				type : 'POST',
+				data : option.data,
+				url : option.url,
+				success : function(data){
+					option.success(data);
+				},
+				error : function(code, text){
+					alert(text);
+				},
+				dataType : 'json',
+				cache : false
+			})
+		}catch(e){
+			alert(e);
+		}
 	}
 
 	function getSign(signObj){
@@ -60,8 +47,8 @@ var store = (function(){
 		// 查询用户个人信息
 		getUserCredit : function(custNum, callback){
 			ajax({
-				// url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/userCredit.htm',
-				url : 'moke/getCredit.json',
+				url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/userCredit.htm',
+				// url : 'moke/getCredit.json',
 				data : {
 					custNum : custNum
 				},
@@ -73,8 +60,8 @@ var store = (function(){
 		// 查询券列表信息
 		queryCoupons : function(callback){
 			ajax({
-				// url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/coupons.htm',
-				url : 'moke/coupons.json',
+				url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/coupons.htm',
+				// url : 'moke/coupons.json',
 				success : function(data){
 					callback(data);
 				}
@@ -96,8 +83,8 @@ var store = (function(){
 			params.sourceCode = RES.sourceCode;
 
 			ajax({
-				// url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/submitResult.htm',
-				url : 'moke/submit.json',
+				url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/submitResult.htm',
+				// url : 'moke/submit.json',
 				data : params,
 				success : function(data){
 					callback(data);
@@ -118,17 +105,29 @@ var store = (function(){
 			params.sourceCode = RES.sourceCode;
 
 			ajax({
-				// url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/exchangeCoupon.htm',
-				url : 'moke/exchange.json',
+				url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/exchangeCoupon.htm',
+				// url : 'moke/exchange.json',
 				data : params,
 				success : function(data){
 					callback(data);
 				}
 			});
-		},
-		// 检测用户是否已经登录
-		checkLogin : function(callback){
-			checkLogin(callback);
 		}
+		// ,
+		// 检测用户是否已经登录
+		// checkLogin : function(callback){
+		// 	$.ajax({
+		// 		type: 'get',
+		// 		url: 'moke/checkLogin.json',
+		// 		success: function(data) {
+		// 			callback && callback(data);
+		// 		},
+		// 		error: function(code, text) {
+		// 			alert(text);
+		// 		},
+		// 		dataType: 'json',
+		// 		cache : false
+		// 	})
+		// }
 	}
 }())
