@@ -176,7 +176,11 @@
 	<script src="js/zepto.min.js"></script>
 	<script src="js/zepto.touch.js"></script>
 	<!-- /build -->
-
+	
+	<!-- build:js http://passport.suning.com/ids/js/passport.js -->
+	<script type="text/javascript" src="passport.js"></script>
+	<!-- /build -->
+	
 	<script src="config.js"></script>
 	<script src="store.js"></script>
 	<script src="share.js"></script>
@@ -195,6 +199,48 @@
 	<script src="js/Loading.js"></script>
 	<script src="app.js"></script>
 	<!-- /build -->
+
+	<script type="text/javascript">
+	/**
+	 * 校验登录状态 触发方法 如已登录，执行给定的函数 如未登录，跳登录页
+	 *
+	 * @return true已登录，false未登录
+	 */
+	function predo() {
+		probeAuthStatus(
+			// hasLoginCallback
+			function(custNum) {
+				// 添加触发开始游戏页面方法；data里面可以得到
+				// console.info(data);
+				alert(custNum);
+				toGame(custNum);
+			},
+			// unLoginCallback
+			function() {
+				goLogon();
+			},
+			passport_config
+		);
+	}
+	var passport_config = {
+		base: "/mts-web/",
+		loginTheme: "wap"
+	};
+
+	function toGame(custNum) {
+		USR_INFO.custNum = custNum;
+		appInit();
+	}
+	/**
+	 * 登录页跳转
+	 */
+	function goLogon() {
+		window.location.href = "https://passportsit.cnsuning.com/ids/login?service=http://dev.cnsuning.com/mts-web/auth?targetUrl=http://" +
+			"http://dev.cnsuning.com/mts-web/worldcup/private/beginGame.do?loginTheme=wap";
+	}
+
+	predo.call();
+	</script>
 
 </body>
 </html>

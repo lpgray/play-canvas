@@ -26,7 +26,7 @@ var store = (function(){
 				error : function(code, text){
 					alert(text);
 				},
-				dataType : 'json',
+				dataType : 'jsonp',
 				cache : false
 			})
 		}catch(e){
@@ -71,6 +71,7 @@ var store = (function(){
 		submitResult : function(params, callback){
 			var current = date2str(new Date(), 'yyyyMMddhhmmss');
 			var signObj = {
+				custNum : USR_INFO.custNum,
 				key : RES.key,
 				sourceCode : RES.sourceCode,
 				point : params.point,
@@ -94,6 +95,7 @@ var store = (function(){
 		// 游戏积分兑换券
 		exchangeCoupon : function(params, callback){
 			var signObj = {
+				custNum : USR_INFO.custNum,
 				key : RES.key,
 				sourceCode : RES.sourceCode,
 				activeId : params.activeId,

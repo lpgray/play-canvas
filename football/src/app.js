@@ -1,5 +1,4 @@
-window.onload = function(){
-	
+(function(){
 	// alert(navigator.userAgent);
 	// Canvas Context
 	var canvas = document.getElementById('J_canvas');
@@ -58,7 +57,7 @@ window.onload = function(){
 		'-o-transform' : 'scale('+ scale +')'
 	});
 	
-	Loading.show('正在加载游戏...', true);
+	Loading.show('正在加载资源...', true);
 
 	var loadedNumber = 0;
 	var imagesNumber = RES.imgNumber;
@@ -66,7 +65,7 @@ window.onload = function(){
 		// console.info(key + ' loaded.');
 		loadedNumber++;
 		if(loadedNumber === imagesNumber){
-			appInit.call();
+			Loading.show('资源加载完成');
 		}
 	};
 
@@ -85,7 +84,7 @@ window.onload = function(){
 	}
 
 	// App Init
-	var appInit = function(){
+	window.appInit = function(){
 		// console.info('App init calling...', resourse);
 		var context = canvas.getContext('2d');
 
@@ -350,7 +349,7 @@ window.onload = function(){
 						var temp = data.couponList[i];
 						tmpl += '<div class="item" data-activeid="'+temp.activeId+'" data-value="'+temp.preValue+'" data-purchase="'+temp.credit+'">';
 						tmpl += ' <h2>'+temp.credit+'积分</h2>';
-						tmpl += ' <img src="img/coupon_'+temp.preValue+'.png" alt="'+temp.preValue+'元券" />';
+						tmpl += ' <img src="img/coupon_'+(temp.preValue>>0)+'.png" alt="'+(temp.preValue>>0)+'元券" />';
 						if(parseInt(temp.credit) > parseInt(USR_INFO.credit)){
 							tmpl += '<div class="not">&nbsp;</div>';
 						}
@@ -410,9 +409,11 @@ window.onload = function(){
 					localStorage.setItem('teamSel', sel);
 				}
 
-				Modal.hide();
-				MainMenu.hide();
-				reset();
+				chkLogin(function(){
+					Modal.hide();
+					MainMenu.hide();
+					reset();
+				});
 			},
 			onScoreSelected : function(option){
 				if(confirm('你确定要兑换'+ option.value +'元现金券吗？')){
@@ -454,6 +455,7 @@ window.onload = function(){
 
 		function chkLogin(success, fail){
 			if(USR_INFO.custNum){
+				fetchScore();
 				success && success();
 				Loading.hide();
 			}else{
@@ -615,4 +617,4 @@ window.onload = function(){
 
 		// document.getElementById('J_allReset').onclick = reset;
 	};
-};
+}());

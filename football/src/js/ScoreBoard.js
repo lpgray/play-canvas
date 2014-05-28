@@ -26,7 +26,7 @@ var ScoreBoard = Class.extend(PaperItem, {
 		this.context.fillText('分数：' + number, this.left + fontLeft, this.top + fontTop);
 	},
 	drawNickname : function(){
-		var nickname = this.nickname || '未登录';
+		var nickname = this.nickname || '';
 		var fontSize = 26 * scale;
 		var fontTop = 50 * scale;
 		var fontLeft = 200 * scale;
