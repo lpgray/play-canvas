@@ -204,52 +204,7 @@
     }
 })(Zepto);
 
-(function() {
-    var ua = navigator.userAgent;
-    if (window.innerWidth <= 800 && window.innerHeight <= 600) {
-        window.tapEvent = "tap";
-        console._log = console.log;
-        console.logMode = 0;
-        console.log = function(f) {
-            if (!$("#console").length && console.logMode) {
-                $("<div id='console' style='position: absolute; right: 0px; bottom:0px; width:200px; height: 100px; font-size: 12px; background-color: #fff; overflow: scroll'></div>").appendTo("body");
-            }
-            this._log(f);
-            if (this.logMode == 1) {
-                $("#console").append("<p>" + JSON.stringify(f) + "</p>");
-            }
-        }
-    } else {
-        window.tapEvent = "click";
-    }
-})();
-
-
-//$.ajaxSettings.timeout=10000;
-$("#circularG").hide();
-var loadingTimer = null;
-$(document).on("ajaxBeforeSend", function(e, xhr, options) {
-    clearTimeout(loadingTimer);
-    loadingTimer = setTimeout(function() {
-        $("#circularG").show();
-    }, 300);
-
-});
-$(document).on("ajaxSuccess", function(e, xhr, options) {
-    clearTimeout(loadingTimer);
-    $("#circularG").hide();
-    //alert(1);
-});
-$(document).on("ajaxError", function(e, xhr, options, error) {
-    clearTimeout(loadingTimer);
-    $("#circularG").hide();
-    if (error == "abort") {
-        return;
-    }
-    alert("请求失败，请重试");
-    //alert(1);
-});
-$(document).on(tapEvent, function(e) {
+$(document).on('tap', function(e) {
     var tar = e.target;
     if (tar.nodeName == "A" && tar.href.indexOf("###") != -1) {
         e.preventDefault();

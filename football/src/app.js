@@ -4,14 +4,17 @@
 	var canvas = document.getElementById('J_canvas');
 	var scale = 1; // other image to scale by the number
 	var resource = {}; // image resource
+	
+	var rotate = 0;
 
 	// set canvas size
 	var wH = window.innerHeight;
 	var wW = window.innerWidth;
-	if(wW < wH){
-		alert('请使用宽频模式进行游戏，请旋转屏幕');
-		location.reload();
-		return;
+	if(wW < wH){ // 正在使用窄屏
+		var _temp = wH;
+		wH = wW;
+		wW = _temp;
+		rotate = 1;
 	}
 
 	if(wW > 800){
@@ -20,29 +23,36 @@
 		var cW = wW;
 		scale = cW / 800;
 	}
-
 	var cH = cW * 0.6;
-
 	if(cH > wH){
 		cH = wH;
 		cW = cH / 0.6;
 		scale = cW / 800;
 	}
-
 	var canvasLeft = 0;
 	var $wrap = $('#J_wrap');
 	if(cW < wW){
 		canvasLeft = parseInt((wW - cW)/2);
-		// canvas.style.marginLeft = canvasLeft + 'px';
 	}
-	// window.canvasLeft = canvasLeft;
-
 	canvas.width = cW;
 	canvas.height = cH;
-
 	$wrap.width(canvas.width);
 	$wrap.height(canvas.height);
-	$wrap.css('margin-left', parseInt((wW - cW)/2));
+	$wrap.css('margin-left', '-' + canvas.width/2 + 'px');
+	$wrap.css('margin-top', '-' + canvas.height/2 + 'px');
+
+	if(rotate){
+		$wrap.addClass('j_rotate');
+	}
+	$(window).bind('resize', function(){
+		var wH = window.innerHeight;
+		var wW = window.innerWidth;
+		if(wW < wH){// 正在使用窄屏
+			$wrap.addClass('j_rotate');
+		}else{
+			$wrap.removeClass('j_rotate');
+		}
+	});
 
 	// 暴露 canvas和缩放值
 	window.canvas = canvas;
@@ -294,7 +304,7 @@
 
 				if(data.isWin == 'Y'){
 					shoot(duration, 1, true, function(){
-						Loading.show('进球了，获得 '+data.addCredit+' 积分', reset);
+						Loading.tip('进球了，获得 '+data.addCredit+' 积分');
 						Loading.hideAfter(2000, function(){
 							reset();
 						});
@@ -303,7 +313,7 @@
 					});
 				}else{
 					shoot(duration, 0, false, function(){
-						Loading.show('没关系，继续努力', reset);
+						Loading.tip('没关系，继续努力');
 						Loading.hideAfter(2000, function(){
 							reset();
 						});
@@ -314,16 +324,28 @@
 			});
 		});
 		
+		function renderScoreView(data) {
+			var tmpl = '';
+			for (var i = 0, l = data.couponList.length; i < l; i++) {
+				var temp = data.couponList[i];
+				tmpl += '<div class="item" data-activeid="' + temp.activeId + '" data-value="' + temp.preValue + '" data-purchase="' + temp.credit + '">';
+				tmpl += ' <h2>' + temp.credit + '积分</h2>';
+				tmpl += ' <img src="img/coupon_' + (temp.preValue >> 0) + '.png" alt="' + (temp.preValue >> 0) + '元券" />';
+				if (parseInt(temp.credit) > parseInt(USR_INFO.credit)) {
+					tmpl += '<div class="not">&nbsp;</div>';
+				}
+				tmpl += '</div>';
+			}
+
+			Modal.setScorePanel(tmpl);
+		}
+
 		//点击按钮事件回调
 		var buttonsCb = {
 			onStart : function(){
 				chkLogin(function(){
 					MainMenu.hide();
 					
-					if (isHelpShow()) {
-						Modal.showWhite();
-					}
-
 					// 判断是否需要进行选择队伍
 					var teamSel = getTeamSel();
 					if(teamSel){
@@ -343,21 +365,15 @@
 					sel : 'score'
 				});
 
-				store.queryCoupons(function(data){
-					var tmpl = '';
-					for(var i = 0, l = data.couponList.length; i < l ;i++){
-						var temp = data.couponList[i];
-						tmpl += '<div class="item" data-activeid="'+temp.activeId+'" data-value="'+temp.preValue+'" data-purchase="'+temp.credit+'">';
-						tmpl += ' <h2>'+temp.credit+'积分</h2>';
-						tmpl += ' <img src="img/coupon_'+(temp.preValue>>0)+'.png" alt="'+(temp.preValue>>0)+'元券" />';
-						if(parseInt(temp.credit) > parseInt(USR_INFO.credit)){
-							tmpl += '<div class="not">&nbsp;</div>';
-						}
-						tmpl += '</div>';
-					}
+				if(!USR_INFO.credit || (USR_INFO.credit>>0) <= 0){
+					Loading.show('你还没有积分，快去踢球赚积分吧。', function(){
+						Loading.hide();
+						Modal.hide();
+					});
+					return;
+				}
 
-					Modal.setScorePanel(tmpl);
-				});
+				store.queryCoupons(renderScoreView);
 			},
 			onRuleView : function(){
 				Modal.show({
@@ -413,6 +429,9 @@
 					Modal.hide();
 					MainMenu.hide();
 					reset();
+					if (isHelpShow()) {
+						Modal.showWhite();
+					}
 				});
 			},
 			onScoreSelected : function(option){
@@ -444,9 +463,9 @@
 							Loading.show('兑换失败，请刷新页面后重新打开。');
 						}else{
 							Loading.show('<p style="font-size: .8em; margin: 0; padding: 0">恭喜你获得了一张'+option.value+'元现金卷，你可以前往【我的易购】中的【我的现金卷】中查询。</p>');
-							scoreBoard.setScore();
 							USR_INFO.credit = score - option.credit;
-							buttonsCb.onScoreView();
+							scoreBoard.setScore(USR_INFO.credit);
+							store.queryCoupons(renderScoreView);
 						}
 					});
 				}
@@ -458,6 +477,9 @@
 				fetchScore();
 				success && success();
 				Loading.hide();
+				// 获取昵称
+				var nick = $.cookie('nick');
+				scoreBoard.setNickname(nick);
 			}else{
 				Loading.show('您没有登录', function(){
 					RES.unlogin();

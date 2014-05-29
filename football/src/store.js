@@ -17,7 +17,7 @@ var store = (function(){
 	function ajax(option){
 		try{
 			$.ajax({
-				type : 'POST',
+				type : 'GET',
 				data : option.data,
 				url : option.url,
 				success : function(data){
@@ -26,7 +26,7 @@ var store = (function(){
 				error : function(code, text){
 					alert(text);
 				},
-				dataType : 'jsonp',
+				dataType : 'json',
 				cache : false
 			})
 		}catch(e){
@@ -47,8 +47,8 @@ var store = (function(){
 		// 查询用户个人信息
 		getUserCredit : function(custNum, callback){
 			ajax({
-				url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/userCredit.htm',
-				// url : 'moke/getCredit.json',
+				// url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/userCredit.htm',
+				url : 'moke/getCredit.json',
 				data : {
 					custNum : custNum
 				},
@@ -60,8 +60,8 @@ var store = (function(){
 		// 查询券列表信息
 		queryCoupons : function(callback){
 			ajax({
-				url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/coupons.htm',
-				// url : 'moke/coupons.json',
+				// url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/coupons.htm',
+				url : 'moke/coupons.json',
 				success : function(data){
 					callback(data);
 				}
@@ -84,8 +84,8 @@ var store = (function(){
 			params.sourceCode = RES.sourceCode;
 
 			ajax({
-				url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/submitResult.htm',
-				// url : 'moke/submit.json',
+				// url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/submitResult.htm',
+				url : 'moke/submit.json',
 				data : params,
 				success : function(data){
 					callback(data);
@@ -107,8 +107,8 @@ var store = (function(){
 			params.sourceCode = RES.sourceCode;
 
 			ajax({
-				url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/exchangeCoupon.htm',
-				// url : 'moke/exchange.json',
+				// url : 'http://sgssit.cnsuning.com/salesgame-web/fkzq/exchangeCoupon.htm',
+				url : 'moke/exchange.json',
 				data : params,
 				success : function(data){
 					callback(data);

@@ -23,145 +23,154 @@
 		height: 100%;
 		width: 100%;
 	}
+	#J_wrap.j_rotate{
+		-webkit-transform: rotate(90deg);
+		-moz-transform: rotate(90deg);
+		-ms-transform: rotate(90deg);
+		-o-transform: rotate(90deg);
+		transform: rotate(90deg);
+	}
 	</style>
 </head>
 <body>
 	
-	<div id="J_wrap" style="position: relative; width: 100%; height: 100%">
+	<div id="J_wrap" style="position: absolute; width: 100%; height: 100%;left: 50%;top: 50%;">
 
-	<div id="J_buttons" class="button-wrap">
-		<div id="J_btnTL" class="sel-button"><div class="arraw"></div></div>
-		<div id="J_btnTT" class="sel-button"><div class="arraw"></div></div>
-		<div id="J_btnTR" class="sel-button"><div class="arraw"></div></div>
-		<div class="clearfix"></div>
-		<div id="J_btnML" class="sel-button"><div class="arraw"></div></div>
-		<div id="J_btnMM" class="sel-button"><div class="circle"></div></div>
-		<div id="J_btnMR" class="sel-button"><div class="arraw"></div></div>
-		<div class="clearfix"></div>
-		<div id="J_btnBL" class="sel-button"><div class="arraw"></div></div>
-		<div id="J_btnBB" class="sel-button"><div class="arraw"></div></div>
-		<div id="J_btnBR" class="sel-button"><div class="arraw"></div></div>
-	</div>
+		<div id="J_buttons" class="button-wrap">
+			<div id="J_btnTL" class="sel-button"><div class="arraw"></div></div>
+			<div id="J_btnTT" class="sel-button"><div class="arraw"></div></div>
+			<div id="J_btnTR" class="sel-button"><div class="arraw"></div></div>
+			<div class="clearfix"></div>
+			<div id="J_btnML" class="sel-button"><div class="arraw"></div></div>
+			<div id="J_btnMM" class="sel-button"><div class="circle"></div></div>
+			<div id="J_btnMR" class="sel-button"><div class="arraw"></div></div>
+			<div class="clearfix"></div>
+			<div id="J_btnBL" class="sel-button"><div class="arraw"></div></div>
+			<div id="J_btnBB" class="sel-button"><div class="arraw"></div></div>
+			<div id="J_btnBR" class="sel-button"><div class="arraw"></div></div>
+		</div>
 
-	<div id="J_progress" class="progress-bar">
-		<div class="progress"></div>
-	</div>
-	
-	<div id="J_BACK" class="b-back j_will_scale">
-		<a  class="btn-mini back"></a>
-	</div>
-	<div id="J_SUB_SHARE" class="b-share j_will_scale">
-		<a  class="btn-mini share"></a>
-	</div>
+		<div id="J_progress" class="progress-bar">
+			<div class="progress"></div>
+		</div>
+		
+		<div id="J_BACK" class="b-back j_will_scale">
+			<a  class="btn-mini back"></a>
+		</div>
+		<div id="J_SUB_SHARE" class="b-share j_will_scale">
+			<a  class="btn-mini share"></a>
+		</div>
 
-	<canvas id="J_canvas"></canvas>
+		<canvas id="J_canvas"></canvas>
 
-	<div id="J_mainPanel" class="main-panel-wrap hide fixed-box top-wrap">
-		<div class="main-panel j_will_scale">
-			<div class="panel-inner">
-				<h1>疯狂射门</h1>
-				<div class="btns-left">
-					<a  class="btn-mini quit"></a>
-				</div>
-				<div class="btns-right">
-					<a  class="btn-mini share"></a>
-				</div>
-				<div class="btns-wrap">
-					<a  class="btn btn-primary">开始游戏</a><a  class="btn btn-primary">球队选择</a><a  class="btn btn-primary">游戏规则</a><a  class="btn btn-primary">积分兑换</a>
+		<div id="J_mainPanel" class="main-panel-wrap hide fixed-box top-wrap">
+			<div class="main-panel j_will_scale">
+				<div class="panel-inner">
+					<h1>疯狂射门</h1>
+					<div class="btns-left">
+						<a  class="btn-mini quit"></a>
+					</div>
+					<div class="btns-right">
+						<a  class="btn-mini share"></a>
+					</div>
+					<div class="btns-wrap">
+						<a  class="btn btn-primary">开始游戏</a><a  class="btn btn-primary">球队选择</a><a  class="btn btn-primary">游戏规则</a><a  class="btn btn-primary">积分兑换</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div id="J_modal" class="modal-wrap hide fixed-box">
-		<div class="j_will_scale modal-scale">
-			<div class="modal">
-				<a  class="close j_close">&times;</a>
-				<div class="modal-content">
-					<h1>游戏说明</h1>
-					<div class="body-content">
-						<div class="j-words-sel j-sel hide" style="font-size: 1.2em; width: 370px; margin: 0 auto; text-align: left;">
-							选择自己喜欢的球队作为射手,疯狂射门赢积分，游戏积分活动期间内可以随时兑换和使用现金券.
-							<br><br>
-							<div class="tc">
-								<a  class="j_close btn btn-primary btn-small">知道了</a>
+		<div id="J_modal" class="modal-wrap hide fixed-box">
+			<div class="j_will_scale modal-scale">
+				<div class="modal">
+					<a  class="close j_close">&times;</a>
+					<div class="modal-content">
+						<h1>游戏说明</h1>
+						<div class="body-content">
+							<div class="j-words-sel j-sel hide" style="font-size: 1.2em; width: 370px; margin: 0 auto; text-align: left;">
+								选择自己喜欢的球队作为射手,疯狂射门赢积分，游戏积分活动期间内可以随时兑换和使用现金券.
+								<br><br>
+								<div class="tc">
+									<a  class="j_close btn btn-primary btn-small">知道了</a>
+								</div>
 							</div>
-						</div>
-						<div class="j-mine-sel j-sel hide">
-							<h3 style="width: 280px; margin: 0 auto; display: block;"><strong style="float:left">总获得积分</strong> <strong style="float:right" id="J_modal_score">10000</strong></h3>
-						</div>
-						<div class="select-wrap hide j-team-sel j-sel clearfix">
-							<div class="item active">
-								<img src="img/flag_bz.png" alt="">
-								<h2>巴西</h2>
-							</div><div class="item">
-								<img src="img/flag_ag.png" alt="">
-								<h2>阿根廷</h2>
-							</div><div class="item">
-								<img src="img/flag_sp.png" alt="">
-								<h2>西班牙</h2>
+							<div class="j-mine-sel j-sel hide">
+								<h3 style="width: 280px; margin: 0 auto; display: block;"><strong style="float:left">总获得积分</strong> <strong style="float:right" id="J_modal_score">10000</strong></h3>
 							</div>
-						</div>
-						<div class="select-wrap hide j-score-sel j-sel clearfix score two-column">
-							<div id="J_score" class="clearfix">
-								
+							<div class="select-wrap hide j-team-sel j-sel clearfix">
+								<div class="item active">
+									<img src="img/flag_bz.png" alt="">
+									<h2>巴西</h2>
+								</div><div class="item">
+									<img src="img/flag_ag.png" alt="">
+									<h2>阿根廷</h2>
+								</div><div class="item">
+									<img src="img/flag_sp.png" alt="">
+									<h2>西班牙</h2>
+								</div>
 							</div>
-							<div class="tc block">
-								<a  class="btn j_close btn-small">返回</a>
+							<div class="select-wrap hide j-score-sel j-sel clearfix score two-column">
+								<div id="J_score" class="clearfix">
+									
+								</div>
+								<div class="tc block">
+									<a  class="btn j_close btn-small">返回</a>
+								</div>
 							</div>
-						</div>
-						<div class="select-wrap hide j-share-sel j-sel clearfix two-column share">
-							<a  class="share_renren">
-								<img src="img/brand_03.png" alt="">
-							</a>
-							<a  class="share_weibo">
-								<img src="img/brand_05.png" alt="">
-							</a>
-							<a  class="share_kaixin">
-								<img src="img/brand_07.png" alt="">
-							</a>
-							<a  class="share_qzone">
-								<img src="img/brand_10.png" alt="">
-							</a>
-							<a  class="share_qqweibo">
-								<img src="img/brand_17.png" alt="">
-							</a>
-							<a  class="share_douban">
-								<img src="img/brand_19.png" alt="">
-							</a>
-							<a  class="share_sohu">
-								<img src="img/brand_21.png" alt="">
-							</a>
+							<div class="select-wrap hide j-share-sel j-sel clearfix two-column share">
+								<a  class="share_renren">
+									<img src="img/brand_03.png" alt="">
+								</a>
+								<a  class="share_weibo">
+									<img src="img/brand_05.png" alt="">
+								</a>
+								<a  class="share_kaixin">
+									<img src="img/brand_07.png" alt="">
+								</a>
+								<a  class="share_qzone">
+									<img src="img/brand_10.png" alt="">
+								</a>
+								<a  class="share_qqweibo">
+									<img src="img/brand_17.png" alt="">
+								</a>
+								<a  class="share_douban">
+									<img src="img/brand_19.png" alt="">
+								</a>
+								<a  class="share_sohu">
+									<img src="img/brand_21.png" alt="">
+								</a>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div id="J_loading" class="fixed-box hide">
-		<div class="loading-wrap j_will_scale">
-			<div class="alert-wrap loading-content">
-				<div class="alert-inner">
-					<h1>提示</h1>
-					<div id="J_loadingctn" class="loading-ctn">正在加载游戏...</div>
-					<a id="J_loadingBtn"  class="btn">确认</a>
+		<div id="J_loading" class="fixed-box hide">
+			<div class="loading-wrap j_will_scale">
+				<div class="alert-wrap loading-content">
+					<div class="alert-inner">
+						<h1>提示</h1>
+						<div id="J_loadingctn" class="loading-ctn">正在加载游戏...</div>
+						<a id="J_loadingBtn"  class="btn">确认</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	
-	<div id="J_whiteModal" class="fixed-box white hide">
-		<div class="j_will_scale inner">
-			<h2 class="tc block">玩法介绍</h2>
-			<p class="block">
-				选择球员之后，手指按住9个方向键蓄力，释放后进行射门。
-			</p>
-			<div class="tc block">
-				<a  class="btn btn-primary j_close">知道了</a>
+		
+		<div id="J_whiteModal" class="fixed-box white hide">
+			<div class="j_will_scale inner">
+				<h1 class="tc block">玩法介绍</h1>
+				<p class="article block">
+					手指按住球门中的9个区域，<br>
+					手指按住时间越长射门力度越<br>
+					大，松开手指完成射门。
+				</p>
+				<div class="tc block">
+					<a  class="btn btn-primary j_close">知道了</a>
+				</div>
 			</div>
 		</div>
-	</div>
 
 	</div><!-- ./J_wrap -->
 	
@@ -212,7 +221,7 @@
 			function(custNum) {
 				// 添加触发开始游戏页面方法；data里面可以得到
 				// console.info(data);
-				alert(custNum);
+				// alert(custNum);
 				toGame(custNum);
 			},
 			// unLoginCallback
@@ -223,7 +232,7 @@
 		);
 	}
 	var passport_config = {
-		base: "/mts-web/",
+		base: "/demo/product/football/mts-web/",
 		loginTheme: "wap"
 	};
 

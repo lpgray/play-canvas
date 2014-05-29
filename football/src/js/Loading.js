@@ -23,6 +23,7 @@ var Loading = (function(){
         okBtn.style.display = 'none';
         v = '<img src="img/loading.gif" alt="" /> ' + v;
       }
+      textCtn.style.marginTop = '.5em';
       textCtn.innerHTML = v;
     },
     hide : function(){
@@ -34,6 +35,12 @@ var Loading = (function(){
         Loading.hide();
         fn.call(Loading);
       }, pause);
+    },
+    tip : function(text){
+      dom.style.display = 'block';
+      okBtn.style.display = 'none';
+      textCtn.style.marginTop = '40px';
+      textCtn.innerHTML = text;
     }
   }
 }());
