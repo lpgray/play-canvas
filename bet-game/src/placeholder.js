@@ -5,7 +5,8 @@ function ajax(url, callback) {
     $.ajax({
         url: url,
         success: callback,
-        dataType: 'html'
+        dataType: 'html',
+        cache : false
     });
 }
 function checkLogon(callback){

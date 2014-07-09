@@ -90,6 +90,7 @@
 		width: 70px; height: 70px;
 		background: url(imgs/btn2_03.png) 0 0 no-repeat;
 		font-size: 0;
+		text-indent: -9999px;
 		box-shadow: none;
 	}
 	.btn-history,
@@ -346,8 +347,8 @@
 	.modal-content > .close{
 		background:#9E0303 linear-gradient(#F00, #9E0303);
 		text-shadow: 0 -1px 0 rgba(177, 0, 0, 0.8);
-		width: 100px;
-		padding:0 0 16px 30px;
+		width: 200px;
+		padding:0 20px 0 0;
 		height: 40px;
 		opacity: 1;
 		color: #fff;
@@ -359,6 +360,7 @@
 		z-index: 2;
 		font-size: 30px;
 		box-shadow: 2px -2px 3px rgba(0,0,0,.5);
+		text-align: right;
 	}
 	.modal-content > .modal-header,
 	.modal-content > .modal-body{

@@ -542,11 +542,17 @@ $(function() {
         }
 
         function onMain(target) {
-            if (!model.total) {
-                view.alert('您还没有投注');
-                return;
-            }
+            // if(model.playing){
+            //     view.alert('游戏中，请稍后！');
+            //     return;
+            // }
 
+            // if (!model.total) {
+            //     view.alert('您还没有投注');
+            //     return;
+            // }
+
+            model.playing = true;
             view.gogogo();
             // sound.gogogo();
 
@@ -559,6 +565,7 @@ $(function() {
                 model.usrInfo.credit = resp.credit;
                 model.total = 0;
                 model.records.push(resp);
+                
                 setTimeout(function() {
                     view.clear();
                     view.stop(resp);
@@ -572,6 +579,10 @@ $(function() {
                         }else{
                             view.alert(theNumber + ' - [ 本次没中奖，继续努力哦! ]');
                         }
+
+                        model.playing = false;
+
+                        fetchPeilv();
 
                         // if (resp.isSuccess === 'Y') {
                         //     view.alert('[ 开奖号码:' + resp.firstNum + ',' + resp.secondNum + ',' +resp.threeNum + ' ] -- [积分输赢: '+ resp.addCredit +']');
@@ -709,10 +720,16 @@ $(function() {
             });
 
             $('#j_clear').bind('click', function() {
+                if(model.playing){
+                    view.alert('游戏中，请稍后！');
+                    return;
+                }
+
                 if (!model.total) {
                     view.alert('你还没有投注');
                     return false;
                 }
+
                 view.confirm('你确定撤销所有投注？', function(){
                     pubsub.publish('clear');
                 });
@@ -721,7 +738,12 @@ $(function() {
             $('#j_btnMain').bind('click', function() {
                 var self = $(this);
                 if (self.is(':disabled')) {
-                    return;
+                    return false;
+                }
+
+                if(model.playing){
+                    view.alert('游戏中，请稍后！');
+                    return false;
                 }
 
                 if (!model.total) {
