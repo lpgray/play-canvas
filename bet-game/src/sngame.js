@@ -188,9 +188,9 @@ $(function() {
         peilv: {},
         peilvRel: {},
         records: [],
-        resourceNumber : 8, // 8张图片，2个音频
+        resourceNumber : 10, // 8张图片，2个音频
         loadedNumber : 0,
-        isLoadAudios : false
+        isLoadAudios : true
     }
 
     /**
@@ -455,7 +455,7 @@ $(function() {
                     return;
                 }
                 var tmpl = '';
-                m.records = m.records.reverse();
+                // m.records = m.records.reverse();
                 for(var i in m.records){
                     var he = parseInt(m.records[i].firstNum) + parseInt(m.records[i].secondNum) + parseInt(m.records[i].threeNum);
                     tmpl += '<tr>';
@@ -493,6 +493,11 @@ $(function() {
     var service = (function(view) {
 
         function onBet(target, option) {
+            if (model.playing) {
+                view.alert('游戏中，请稍后！');
+                return;
+            }
+
             if (!model.current) {
                 view.view.alert('请选择筹码再投注');
                 return false;
@@ -525,13 +530,13 @@ $(function() {
                 model.total += model.current;
                 view.usrInfo();
                 view.betInfo();
-                // sound.bet();
+                sound.bet();
             }
         }
 
         function onPickup(target, obj) {
             model.current = obj.val;
-            // sound.pickUp();
+            sound.pickUp();
         }
 
         function onClear() {
@@ -554,7 +559,7 @@ $(function() {
 
             model.playing = true;
             view.gogogo();
-            // sound.gogogo();
+            sound.gogogo();
 
             store.saveBet(function(resp) {
                 if (resp.isPass === 'N') {
@@ -564,18 +569,18 @@ $(function() {
 
                 model.usrInfo.credit = resp.credit;
                 model.total = 0;
-                model.records.push(resp);
+                model.records.unshift(resp);
                 
                 setTimeout(function() {
                     view.clear();
                     view.stop(resp);
-                    // sound.stop();
+                    sound.stop();
                     setTimeout(function(){
                         // var addCredit = parseInt(resp.addCredit);
                         var theNumber = '[ 开奖号码:' + resp.firstNum + ',' + resp.secondNum + ',' +resp.threeNum + ' ]';
                         if(resp.addCredit && resp.addCredit > 0){
                             view.alert(theNumber + ' - [ 恭喜您获得了 ' + Math.abs(resp.addCredit) + ' 积分 ]');
-                            // sound.win();
+                            sound.win();
                         }else{
                             view.alert(theNumber + ' - [ 本次没中奖，继续努力哦! ]');
                         }
@@ -652,6 +657,7 @@ $(function() {
                 if(!model.isLoadAudios){
                     return;
                 }
+
                 audioBet = document.getElementById('J_audioBet');
                 audioWin = document.getElementById('J_audioWin');
                 var self = this;

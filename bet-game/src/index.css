@@ -319,6 +319,7 @@
 	}
 	.modal .table>thead>tr>th, .modal .table>tbody>tr>td{
 		border-color: #723a31;
+		padding: 10px;
 	}
 	.modal-content{
 		background: transparent;
@@ -345,6 +346,7 @@
 		text-shadow: 0 2px 2px #583501, 2px 0 2px #583501, 0 -2px 2px #583501, -2px 0 2px #583501;
 	}
 	.modal-content > .close{
+		background:#930303;
 		background:#9E0303 linear-gradient(#F00, #9E0303);
 		text-shadow: 0 -1px 0 rgba(177, 0, 0, 0.8);
 		width: 200px;
@@ -373,6 +375,8 @@
 		box-shadow: 0 2px 1px #775513,inset 0 2px 0px #4f520d;
 		border-radius: 6px;
 		font-size: 16px;
+		max-height:500px;
+		overflow-y: auto;
 	}
 	.modal-footer{
 		border: none;
