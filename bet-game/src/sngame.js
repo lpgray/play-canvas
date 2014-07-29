@@ -354,13 +354,13 @@ $(function() {
             }
 
             function scaleMainFrame(){
-                var mainFrame = $('.main-wrap');
+                var mainFrame = $('#J_mainWrap');
                 var body = $('body');
                 var mainWrapW = mainFrame.width();
                 var mainHeight = mainFrame.height();
                 var winW = $(window).width();
                 var winH = $(window).height();
-                
+                // console.info(winW, mainWrapW);
                 var scale0 = winW/mainWrapW;
                 var scale1 = winH/mainHeight;
 
@@ -369,12 +369,12 @@ $(function() {
                 }else{
                     var scale = scale0;
                 }
-
-                body.css('-webkit-transform', 'scale('+scale+')');
-                body.css('-moz-transform', 'scale('+scale+')');
-                body.css('-ms-transform', 'scale('+scale+')');
-                body.css('-o-transform', 'scale('+scale+')');
-                body.css('transform', 'scale('+scale+')');
+                // console.info(scale +','+ scale0 +','+ scale1 +','+ winW +','+ winH);
+                mainFrame.css('-webkit-transform', 'scale('+scale+')');
+                mainFrame.css('-moz-transform', 'scale('+scale+')');
+                mainFrame.css('-ms-transform', 'scale('+scale+')');
+                mainFrame.css('-o-transform', 'scale('+scale+')');
+                mainFrame.css('transform', 'scale('+scale+')');
             }
 
             return {
@@ -384,10 +384,10 @@ $(function() {
                     dices.push(new dice(1));
                     dices.push(new dice(2));
 
-                    // scaleMainFrame();
+                    scaleMainFrame();
+                    $(window).resize(scaleMainFrame);
                 },
                 run: function() {
-                    // console.info('running...', this.pause);
                     if (pause) {
                         return;
                     }
@@ -798,7 +798,4 @@ $(function() {
         }
     }(view, sound));
     app.init();
-
-    // window.store = store;
-    // window.view = view;
 });
