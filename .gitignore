@@ -20,3 +20,5 @@ doc
 
 *.rar
 *.zip
+
+*.DS_Store
