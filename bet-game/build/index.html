@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>骰子摇摇乐</title>
+	<meta content="yes" name="apple-mobile-web-app-capable" />
+	<meta content="yes" name="apple-touch-fullscreen" />
+	<meta content="telephone=no" name="format-detection" />
+	<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+	<meta id="J_metaView" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no" name="viewport" />
+	<link rel="stylesheet" href="all.css">
+</head>
+<body>
+	
+	<div id="J_mainWrap" class="main-wrap">
+		
+		<div class="header">骰子摇摇乐</div>
+
+		<div class="info-wrap">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-3">
+						<a id="J_shwModalHelp" href="#" class="btn btn-help"></a>
+					</div>
+					<div class="col-xs-6">
+						<div class="info-panel">
+							<p><span id="j_welcomeInfo" style="display: none;">欢迎您！<span></span></span>&nbsp;&nbsp;您的积分：<span id="j_creditInfo">--</span></p>
+						</div>
+					</div>
+					<div class="col-xs-3">
+						<a id="J_shwModalRecord" href="#" class="btn btn-history"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="J_desktop" class="desktop">
+			<div class="container">
+
+				<div class="row row-0">
+					<div class="bet-grid col-xs-4 br-tl" alias="SECOND"><div>对子 <span>--</span></div></div>
+					<div class="bet-grid col-xs-4" alias="LEOPARD"><div>豹子 <span>--</span></div></div>
+					<div class="bet-grid col-xs-4 br-tr" alias="STRAIGHT"><div>顺子 <span>--</span></div></div>
+				</div>
+
+				<div class="row row-1">
+					<div class="col-xs-2">
+						<div class="row">
+							<div class="bet-grid col-xs-12" alias="EIGHTEEN"><div>18 <span>--</span></div></div>
+							<div class="bet-grid col-xs-12" alias="SEVENTEEN"><div>17 <span>--</span></div></div>
+							<div class="bet-grid col-xs-12" alias="SIXTEEN"><div>16 <span>--</span></div></div>
+							<div class="bet-grid col-xs-12" alias="FIFTEEN"><div>15 <span>--</span></div></div>
+							<div class="bet-grid col-xs-12" alias="FOURTEEN"><div>14 <span>--</span></div></div>
+						</div>
+					</div>
+					<div class="col-xs-8">
+						<div class="row">
+							<div class="col-xs-12 canvas-ctn">
+								<canvas id="j_canvas" width="280" height="206">
+									<p>您的浏览器不支持canvas</p>
+								</canvas>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 big-ctn">
+								<div class="bet-grid col-xs-6" alias="BIG"><div>大 <span>--</span></div></div>
+								<div class="bet-grid col-xs-6" alias="SMALL"><div>小 <span>--</span></div></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class="row">
+							<div class="bet-grid col-xs-12" alias="THREE"><div>3 <span>--</span></div></div>
+							<div class="bet-grid col-xs-12" alias="FOUR"><div>4 <span>--</span></div></div>
+							<div class="bet-grid col-xs-12" alias="FIVE"><div>5 <span>--</span></div></div>
+							<div class="bet-grid col-xs-12" alias="SIX"><div>6 <span>--</span></div></div>
+							<div class="bet-grid col-xs-12" alias="SEVEN"><div>7 <span>--</span></div></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row row-2">
+					<div class="bet-grid col-xs-2 br-bl" alias="THIRTEEN"><div>13 <span>--</span></div></div>
+					<div class="bet-grid col-xs-2" alias="TWELVE"><div>12 <span>--</span></div></div>
+					<div class="bet-grid col-xs-2" alias="ELEVEN"><div>11 <span>--</span></div></div>
+					<div class="bet-grid col-xs-2" alias="TEN"><div>10 <span>--</span></div></div>
+					<div class="bet-grid col-xs-2" alias="NINE"><div>9 <span>--</span></div></div>
+					<div class="bet-grid col-xs-2 br-br" alias="EIGHT"><div>8 <span>--</span></div></div>
+				</div>
+
+			</div>
+		</div><!-- desktop -->
+
+
+
+		
+		<div class="bottom-wrap">
+			<div class="row">
+				总计投注：<span id="j_onceTotal">0</span> 积分 <button id="j_clear" class="btn btn-default btn-xs">清空</button>
+			</div>
+			<div class="row">
+				<h5><strong>请选择你要下注的筹码，点击页面的格子进行下注</strong></h5>
+				<div class="j_chouma" data-toggle="buttons">
+					  <label class="btn btn-default active">
+					  	<i class="chouma chouma-10">10</i>
+					    <input type="radio" name="options" id="option1" value="10">10
+					  </label>
+					  <label class="btn btn-default">
+					  	<i class="chouma chouma-50">50</i>
+					    <input type="radio" name="options" id="option2" value="50">50
+					  </label>
+					  <label class="btn btn-default">
+					  	<i class="chouma chouma-100">100</i>
+					    <input type="radio" name="options" id="option3" value="100"/>100
+					  </label>
+					  <label class="btn btn-default">
+					  	<i class="chouma chouma-500">500</i>
+					    <input type="radio" name="options" id="option5" value="500">500
+					  </label>
+					  <label class="btn btn-default">
+					  	<i class="chouma chouma-1000">1000</i>
+					    <input type="radio" name="options" id="option6" value="1000">1000
+					  </label>
+				</div>
+				<div>
+					<button id="j_btnMain" class="btn btn-default">开始</button>
+				</div>
+			</div>
+		</div><!-- bottom-wrap -->
+	</div>
+	
+	
+	<!-- Modals -->
+	<div class="modal fade modal-info" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+	      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	      <div class="modal-header">
+	      	<h4 class="modal-title" id="myModalLabel">游戏帮助</h4>
+	      </div>
+	      <div class="modal-body">
+	      	1）筹码分为：10、50、100、500、1000五种，登录后选择任意一种点击桌面上的格子即可下注。<br>
+			2）下注后在总计投注处可以看到当前下注总额。点击清空按钮可以清空当前下注信息。<br>
+			3）白色为点数。当猜中结果时，奖励分为下注的筹码分乘以对应的赔率。<br>
+			4）每次游戏最大下注1万分。<br><br>
+			<h5 style="text-align: center;font-style: 16px;">==== <strong>特殊组合说明</strong> ====</h5>
+			豹子：三个骰子数字相同<br>
+			顺子：3个骰子数字为连续(123/234/345…)<br>
+			对子：任意两个骰子数字相同<br>
+			小&nbsp;&nbsp;&nbsp;：3个骰子总和为3到10<br>
+			大&nbsp;&nbsp;&nbsp;：3个骰子总和为11到18
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="modal fade modal-info" id="recordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+	      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	      <div class="modal-header">
+	        <h4 class="modal-title" id="myModalLabel">以往号码</h4>
+	      </div>
+	      <div class="modal-body">
+			<table class="table">
+			  <thead>
+			  	<tr>
+			  		<th width="70%">号码</th>
+			  		<th>和值</th>
+			  	</tr>
+			  </thead>
+			  <tbody id="J_recordCtn">
+			  	<tr>
+			  		<td colspan="2"><p style="text-align: center;">暂无结果</p></td>
+			  	</tr>
+			  	<!-- <tr>
+			  		<td>1,2,3</td>
+			  		<td>6</td>
+			  	</tr>
+			  	<tr>
+			  		<td>1,2,3</td>
+			  		<td>6</td>
+			  	</tr>
+			  	<tr>
+			  		<td>1,2,3</td>
+			  		<td>6</td>
+			  	</tr>
+			  	<tr>
+			  		<td>1,2,3</td>
+			  		<td>6</td>
+			  	</tr> -->
+			  </tbody>
+			</table>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="modal modal-confirm" id="J_confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	      	<div class="j_content">
+	      		
+	      	</div>
+	      	<br />
+			<div class="btn-wrap j_confirm" style="text-align: right;display: none">
+				<a href="#" class="btn btn-primary j_enter">确定</a>&nbsp;&nbsp;<a href="#" class="btn btn-default" data-dismiss="modal">取消</a>
+			</div>
+			<div class="btn-wrap j_alert" style="text-align: right;display: none">
+				<a href="#" class="btn btn-primary" data-dismiss="modal">确定</a>
+			</div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="progress progress-striped active" style="display: none">
+		  <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+		    <span>loading...</span>
+		  </div>
+	</div>
+
+	<div id="J_resources" style="display:none">
+		<img data-src="imgs/p_03.png" data-name="pan"/>
+		<img data-src="imgs/1.png" data-name="c1"/>
+		<img data-src="imgs/2.png" data-name="c2"/>
+		<img data-src="imgs/3.png" data-name="c3"/>
+		<img data-src="imgs/4.png" data-name="c4"/>
+		<img data-src="imgs/5.png" data-name="c5"/>
+		<img data-src="imgs/6.png" data-name="c6"/>
+		<img data-src="imgs/bet_sm.png" data-name="xsda1d"/>
+	</div>
+
+	
+	<audio id="J_audioBet" data-src="audios/bet.WAV" data-type="audio"></audio>
+	<audio id="J_audioWin" data-src="audios/win.WAV" data-type="audio"></audio>
+	<script src="placeholder.js"></script>
+	<script src="all.js"></script>
+
+</body>
+</html>
